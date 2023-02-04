@@ -1,8 +1,6 @@
-import "./App.css";
 import ShareFile from "./components/ShareFile";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Chat from "./components/Chat";
-import Navbar from "./components/Navbar";
+import Chat from "./components/Chat/index";
 import UsersList from "./components/UsersList";
 import NewsFeed from "./components/NewsFeed";
 import Assets from "./components/Assets";
@@ -11,7 +9,7 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/chat" element={<Chat />} />
           <Route path="/users" element={<UsersList />} />

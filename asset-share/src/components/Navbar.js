@@ -2,7 +2,10 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { FileAppContext } from "../context/FileContext";
-import "./Navbar.css";
+import { AvatarGenerator } from "random-avatar-generator";
+import { FiSearch } from "react-icons/fi";
+const generator = new AvatarGenerator();
+
 const Navbar = () => {
   const { name } = useContext(FileAppContext);
   // useEffect(() => {
@@ -10,46 +13,20 @@ const Navbar = () => {
   // }, []);
   const navigate = useNavigate();
   return (
-    <div className="flex flex-row p-4 items-center justify-between bg-[#10141A]">
+    <div className="flex flex-row py-6 px-12 items-center justify-between bg-gray-900">
       <div className="flex flex-row items-center">
-        <h1 className="text-white text-2xl ml-4 font-semibold flex flex-row font-poppins">
-          D <h1 className="font-light">witter</h1>
+        <img className="w-8" src={logo} />
+        <h1 className="text-white text-2xl ml-2 font-semibold flex flex-row font-poppins">
+          D<h1 className="font-light">witter</h1>
         </h1>
       </div>
-      <div className="flex flex-row items-center flex-1 justify-evenly">
-        <h1
-          onClick={() => {
-            navigate("/");
-          }}
-          className="text-white text-xl cursor-pointer"
-        >
-          Home
-        </h1>
-        <h1
-          onClick={() => {
-            navigate("/assets");
-          }}
-          className="text-white text-xl cursor-pointer"
-        >
-          Assets
-        </h1>
-        <h1
-          onClick={() => {
-            navigate("/chat");
-          }}
-          className="text-white text-xl cursor-pointer"
-        >
-          Chat
-        </h1>
-        <h1
-          onClick={() => {
-            navigate("/news");
-          }}
-          className="text-white text-xl cursor-pointer"
-        >
-          News Feed
-        </h1>
-        {name ? <h1 className="text-white text-xl">{name}</h1> : null}
+      <div className="flex items-center gap-2 rounded-xl border border-gray-600 hover:border-gray-400 min-w-[50%] text-gray-100 px-4 py-2">
+        <FiSearch className="text-xl" />
+        <input placeholder="Search for something here..." className="bg-transparent focus:outline-none w-full" />
+      </div>
+      <div className="flex gap-4 items-center">
+        {name ? <h1 className="text-white text-2xl">{name}</h1> : null}
+        <img className="w-8" src={generator.generateRandomAvatar()} />
       </div>
     </div>
   );

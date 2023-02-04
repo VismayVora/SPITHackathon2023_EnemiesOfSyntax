@@ -6,6 +6,33 @@ import { OpenAIApi, Configuration } from "openai";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "./Navbar";
+import { RiFlag2Line } from "react-icons/ri";
+import { AvatarGenerator } from "random-avatar-generator";
+import Sidebar from "./Sidebar";
+const generator = new AvatarGenerator();
+
+const Card = ({ tweet }) => {
+  return (
+    <div
+      className="bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2"
+      key={tweet.tweet_msg}
+    >
+      <img className="w-12" src={generator.generateRandomAvatar()} />
+      <div>
+        <div className="flex justify-between items-center mb-1">
+          <h1 className="text-3xl font-semibold">{tweet.userName}</h1>
+          <button className="p-2 rounded-full hover:bg-red-200">
+            <RiFlag2Line className="text-2xl text-red-700" />
+          </button>
+        </div>
+        <h1 className="text-gray-400">{tweet.tweet_msg}</h1>
+        <img className="rounded-xl my-2" src={tweet.image_url} />
+      </div>
+    </div>
+  );
+};
+
 const Tweets = () => {
   const [desc, setDesc] = useState("");
   const config = new Configuration({
@@ -20,6 +47,7 @@ const Tweets = () => {
   const [tweets, setTweets] = useState([]);
   const [imgurl, setImgUrl] = useState("");
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const fetchTweets = async () => {
     const contract = await connectWithTwitterContract();
     const tweets = await contract.getTweets();
@@ -94,6 +122,70 @@ const Tweets = () => {
   };
   return (
     <>
+      <Navbar />
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setIsOpen(false)}
+        contentLabel="Example Modal"
+        className="w-[90vw] h-[90vh] px-12 py-8 bg-gray-900 text-gray-100 rounded-xl mx-auto mt-[5vh]"
+      >
+        <h1 className="text-4xl font-semibold mb-4">Post Tweet</h1>
+        <h1>Add Description</h1>
+        <textarea
+          className="bg-gray-800 px-4 py-2 rounded-xl my-2 w-full focus:outline-none text-gray-400 resize-none"
+          rows={5}
+          value={tweetText}
+          onChange={(e) => setTweetText(e.target.value)}
+          placeholder="Enter description ..."
+        />
+        <h1>Add media</h1>
+        <input
+          className="accent-gray-900 my-2"
+          name="media"
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+        <h1 className="text-2xl my-2 font-bold">OR</h1>
+        <h1>Use AI to generate Image for your tweet</h1>
+        <div className="flex my-2 gap-4">
+          <input
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            type="text"
+            placeholder="Enter Tweet"
+            className="bg-gray-800 px-4 py-2 rounded-xl w-full focus:outline-none text-gray-400"
+          />
+          <button
+            className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
+            onClick={() => generateImage()}
+          >
+            Generate Image
+          </button>
+        </div>
+        {imgurl.length > 0 ? (
+          <div>
+            <img className="h-32 w-32 rounded-xl" src={imgurl} />
+          </div>
+        ) : (
+          <div className="h-32 w-32 bg-gray-800 rounded-xl"></div>
+        )}
+        <div className="flex my-2 gap-4">
+          <button
+            className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
+            onClick={() => tweetAI()}
+          >
+            Tweet AI Generated Photo
+          </button>
+          <button
+            className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
+            onClick={() => {
+              tweetKaro();
+            }}
+          >
+            Tweet Karo Dost
+          </button>
+        </div>
+      </Modal>
       {!name ? (
         <div className="flex">
           <input
@@ -109,41 +201,28 @@ const Tweets = () => {
           </button>
         </div>
       ) : (
-        <div>
+        <div className="bg-gray-900 text-gray-100 flex">
+          <Sidebar />
           <ToastContainer />
-          <h1>Use AI to generate Image for your tweet</h1>
-          <input value={desc} onChange={(e) => setDesc(e.target.value)} />
-          {imgurl.length > 0 ? (
-            <div>
-              <img className="h-32 w-32" src={imgurl} />
+          <div className="p-8 bg-gray-800 w-[60%] rounded-xl">
+            <div className="flex justify-between mb-8">
+              <h1 className="text-5xl font-bold">Home</h1>
+              <button
+                className="px-12 py-1 uppercase text-xl bg-sky-500 rounded-xl"
+                onClick={() => setIsOpen(true)}
+              >
+                Add Tweet
+              </button>
             </div>
-          ) : null}
-          <button onClick={() => generateImage()}>Generate Image</button>
-          <button onClick={() => tweetAI()}>Tweet AI Generated Photo</button>
-          <input
-            value={tweetText}
-            onChange={(e) => setTweetText(e.target.value)}
-            type="text"
-            placeholder="Enter Tweet"
-          />
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-          <button
-            onClick={() => {
-              tweetKaro();
-            }}
-          >
-            Tweet Karo Dost
-          </button>
-          <div>
-            {tweets.length > 0
-              ? tweets.map((tweet) => (
-                  <div key={tweet.tweet_msg}>
-                    <h1>{tweet.userName}</h1>
-                    <h2>{tweet.tweet_msg}</h2>
-                    <img src={tweet.image_url} />
-                  </div>
-                ))
-              : null}
+            <div>
+              {tweets.length > 0 ? (
+                tweets.map((tweet) => <Card tweet={tweet} />)
+              ) : (
+                <>
+                  <h1 className="text-2xl text-gray-400">No Tweets</h1>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -104,6 +104,7 @@ const ShareFile = () => {
   };
   return (
     <div className="bg-[#10141A] h-screen">
+      <Navbar />
       {account.length > 0 ? (
         <div className="flex flex-col">
           <div className="flex items-center justify-around">
