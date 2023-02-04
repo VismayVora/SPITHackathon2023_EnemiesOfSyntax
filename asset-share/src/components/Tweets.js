@@ -264,7 +264,12 @@ const Tweets = () => {
               </div>
               <div>
                 {tweets.length > 0 ? (
-                  tweets.map((tweet) => <Card tweet={tweet} />)
+                  tweets.map((tweet) => (
+                    <Card
+                      connectWithTwitterContract={connectWithTwitterContract}
+                      tweet={tweet}
+                    />
+                  ))
                 ) : (
                   <>
                     <h1 className="text-2xl text-gray-400 mt-8">No Tweets</h1>

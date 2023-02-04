@@ -4,7 +4,7 @@ pragma solidity >=0.7.0 <0.9.0;
 
 contract Twitter{
     address payable public owner;
-    uint public count=0;
+    uint public count=1;
     struct Tweet{
         uint uid;
         string  image_url;
@@ -33,6 +33,7 @@ contract Twitter{
     mapping (uint => uint) votingOfNotRemovalTweets;
     mapping (address => mapping (uint => bool)) isVotingDone;
     mapping (address => mapping (uint => bool)) isReported;
+    mapping (uint => bool) isInVoting;
     mapping (uint => uint) votingTime;
     event addTweetEvent(string  _image_url,string  _tweet_msg,string  _username);
     event removalVote(uint _uid);
@@ -95,6 +96,7 @@ contract Twitter{
         votingTweets.push(_uid);
         uint _votingPeriod = block.timestamp + (_days * 1 days);
         votingTime[_uid] = _votingPeriod;
+        isInVoting[_uid] = true;
         emit addTweetToVote(_uid);
     }
 

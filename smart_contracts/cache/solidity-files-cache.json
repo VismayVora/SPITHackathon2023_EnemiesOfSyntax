@@ -72,8 +72,8 @@
       ]
     },
     "D:\\manan\\SPITHackathon2023_EnemiesOfSyntax\\smart_contracts\\contracts\\Twitter.sol": {
-      "lastModificationDate": 1675519963356,
-      "contentHash": "c588b21d9b3266079ae988e00cce8644",
+      "lastModificationDate": 1675532977600,
+      "contentHash": "045ee0ac40fc184cf1ea4d31bec6bd41",
       "sourceName": "contracts/Twitter.sol",
       "solcConfig": {
         "version": "0.8.17",
