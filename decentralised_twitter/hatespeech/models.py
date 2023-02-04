@@ -1,8 +1,15 @@
 from django.db import models
 
 # Create your models here.
+# class ReportTweet(models.Model):
+#     report_count = models.PositiveIntegerField()
+
+# class LikeTweet(models.Model):
+#     like_count = models.PositiveIntegerField()
+
 class Tweet(models.Model):
     report_count = models.PositiveIntegerField()
+    like_count = models.PositiveIntegerField()
 
 class File(models.Model):
     file = models.FileField()

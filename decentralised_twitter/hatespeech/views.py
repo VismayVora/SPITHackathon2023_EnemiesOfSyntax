@@ -8,6 +8,7 @@ from detoxify import Detoxify
 import requests
 import json
 from decentralised_twitter import settings
+# from .models import LikeTweet,ReportTweet
 from .models import Tweet
 from .serializers import *
 from requests import get 
@@ -124,13 +125,13 @@ class ReportTweetView(APIView):
             try:
                 tweet = Tweet.objects.all()
             except Tweet.DoesNotExist:
-                content = {'detail': 'No tweets reported by any user'}
+                content = {'detail': 'No tweet found'}
                 return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
         else:
             try:
                 tweet = Tweet.objects.get(id=pk)
             except Tweet.DoesNotExist:
-                content = {'detail': 'No such reported tweet'}
+                content = {'detail': 'No such tweet'}
                 return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
             tweetDetails = TweetSerializer(tweet, many=False, context={'request': request})
             return JsonResponse(tweetDetails.data,status = status.HTTP_200_OK)
@@ -144,7 +145,7 @@ class ReportTweetView(APIView):
             tweet_obj.report_count += 1
             tweet_obj.save()
         except Tweet.DoesNotExist:
-            tweet_obj = Tweet(report_count=1)
+            tweet_obj = ReportTweet(report_count=1,like_count=0)
             tweet_obj.save()
         tweetDetails = TweetSerializer(tweet_obj, many=False)
         return JsonResponse(tweetDetails.data, status = status.HTTP_202_ACCEPTED)
@@ -153,10 +154,10 @@ class ReportTweetView(APIView):
         try:
             tweet = Tweet.objects.get(id = pk)
         except Tweet.DoesNotExist:
-            content = {'detail': 'No such reported tweet available'}
+            content = {'detail': 'No such tweet available'}
             return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
         tweet.delete()
-        return JsonResponse({'Response': 'Reported tweet successfully removed from list!'},status = status.HTTP_200_OK)
+        return JsonResponse({'Response': 'Tweet successfully removed from list!'},status = status.HTTP_200_OK)
 
 class DetectHateAudio(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -254,3 +255,46 @@ class DetectHateVideo(APIView):
             else:
                 break
         return JsonResponse(response_dict,safe=False)
+
+class LikeTweetView(APIView):
+    serializer_class = TweetSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get(self, request, pk):
+        if pk == '0':
+            try:
+                tweet = Tweet.objects.all()
+            except Tweet.DoesNotExist:
+                content = {'detail': 'No tweets liked by any user'}
+                return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
+        else:
+            try:
+                tweet = Tweet.objects.get(id=pk)
+            except Tweet.DoesNotExist:
+                content = {'detail': 'No such liked tweet'}
+                return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
+            tweetDetails = TweetSerializer(tweet, many=False, context={'request': request})
+            return JsonResponse(tweetDetails.data,status = status.HTTP_200_OK)
+        tweetDetails = TweetSerializer(tweet, many=True, context={'request': request})
+        return JsonResponse(tweetDetails.data, safe=False,status = status.HTTP_200_OK)
+
+
+    def post(self, request, pk):
+        try:
+            tweet_obj = Tweet.objects.get(id=pk)
+            tweet_obj.like_count += 1
+            tweet_obj.save()
+        except Tweet.DoesNotExist:
+            tweet_obj = Tweet(like_count=1)
+            tweet_obj.save()
+        tweetDetails = TweetSerializer(tweet_obj, many=False)
+        return JsonResponse(tweetDetails.data, status = status.HTTP_202_ACCEPTED)
+
+    def delete(self,request,pk):
+        try:
+            tweet = Tweet.objects.get(id = pk)
+        except Tweet.DoesNotExist:
+            content = {'detail': 'No such reported tweet available'}
+            return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
+        tweet.delete()
+        return JsonResponse({'Response': 'Tweet successfully removed from list!'},status = status.HTTP_200_OK)
