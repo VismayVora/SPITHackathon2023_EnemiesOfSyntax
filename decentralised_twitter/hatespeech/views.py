@@ -10,6 +10,10 @@ import json
 from decentralised_twitter import settings
 from .models import Tweet
 from .serializers import *
+from requests import get 
+import whisper
+from rest_framework.parsers import MultiPartParser,FormParser
+from decentralised_twitter.settings import MEDIA_ROOT
 
 # Create your views here.
 class DetectHateSpeech(APIView):
@@ -153,3 +157,100 @@ class ReportTweetView(APIView):
             return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
         tweet.delete()
         return JsonResponse({'Response': 'Reported tweet successfully removed from list!'},status = status.HTTP_200_OK)
+
+class DetectHateAudio(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, format=None):
+        file_serializer = FileSerializer(data=request.data)
+        if file_serializer.is_valid():
+            file_obj = file_serializer.save()
+        # serializer = FileSerializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        # # once validated, grab the file from the request itself
+        # file = request.FILES['file']
+        model = whisper.load_model("base")
+        result = model.transcribe(MEDIA_ROOT + "/" + file_obj.filename)
+        print(result['text'])
+        response = Detoxify('unbiased').predict(result['text'])
+        ordered_toxicity_scores = sorted(response.items(),key = lambda x: x[1],reverse = True)
+        response_dict = {}
+        for i in ordered_toxicity_scores:
+            if i[1] > 0.9:
+                response_dict = {"Hate Speech Detected": "This text has {hate} content with {value}".format(hate=i[0],value = i[1]), "hate":True}
+                break
+            else:
+                response_dict = {"Hate Speech Not Detected": "This text has {hate} content with only {value}".format(hate=i[0],value = i[1]), "hate":False}
+        return Response(response_dict, status=status.HTTP_201_CREATED)
+    
+class DetectHateVideo(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, format=None):
+        file_serializer = FileSerializer(data=request.data)
+        if file_serializer.is_valid():
+            file_obj = file_serializer.save()
+        
+        params = {
+            # specify the models you want to apply
+            'models': 'nudity-2.0,wad,offensive,scam,text-content,gore',
+            'api_user': settings.api_user,
+            'api_secret': settings.api_secret
+        }
+        files = {'media': open(MEDIA_ROOT + "/" + file_obj.filename, 'rb')}
+        r = requests.post('https://api.sightengine.com/1.0/video/check-sync.json', files=files, data=params)
+        r = r.json()
+        sensitive_comparison_keys = ["weapon","alcohol","drugs"]
+        nudity_comparison_keys = ["sexual_activity", "sexual_display", "erotica"]
+        suggestive_comparison_keys = ["bikini","cleavage","male_chest","lingerie","miniskirt"]
+        flag = 0
+        
+        for frame in r['data']['frames']:
+            print(frame)
+            for key,value in frame.items():
+                if key in sensitive_comparison_keys:
+                    if value >=0.7:
+                        print(key)
+                        print(value)
+                        response_dict = {"Sensitive Image Detected": "This image has {hate_parameter} content with {value}".format(hate_parameter=key,value = value), "hate":True}
+                        flag = 1
+                        break
+                    else:
+                        print(key)
+                        print(value)
+                    response_dict = {"Sensitive Image Not Detected": "This image does not have sensitive content", "hate":False}
+            if flag != 1:
+                for key,value in frame['nudity'].items():
+                    if key in nudity_comparison_keys:
+                        if value >=0.7:
+                            print(key)
+                            print(value)
+                            response_dict = {"Sensitive Image Detected": "This image has {hate_parameter} content with {value}".format(hate_parameter=key,value = value), "hate":True}
+                            flag = 1
+                            break
+                        else:
+                            print(key)
+                            print(value)
+                            response_dict = {"Sensitive Image Not Detected": "This image does not have sensitive content", "hate":False}
+            else:
+                break
+            if flag !=1:
+                for key,value in frame['nudity']['suggestive_classes'].items():
+                    if key in suggestive_comparison_keys:
+                        if value >=0.7:
+                            print(key)
+                            print(value)
+                            response_dict = {"Sensitive Image Detected": "This image has {hate_parameter} content with {value}".format(hate_parameter=key,value = value), "hate":True}
+                            break
+                        else:
+                            print(key)
+                            print(value) 
+                            response_dict = {"Sensitive Image Not Detected": "This image does not have sensitive content", "hate":False}
+            else:
+                break
+            if flag !=1:
+                if frame['gore']['prob'] > 0.7:
+                    response_dict = {"Sensitive Image Detected": "This image has gore content with {value}".format(value = r['gore']['prob']), "hate":True}
+            else:
+                break
+        return JsonResponse(response_dict,safe=False)
