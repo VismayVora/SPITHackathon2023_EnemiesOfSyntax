@@ -6,6 +6,7 @@ import NewsFeed from "./components/NewsFeed";
 import Assets from "./components/Assets";
 import Tweets from "./components/Tweets";
 import Admin from "./components/Admin";
+import Vote from "./components/Vote";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/chat" element={<Chat />} />
           <Route path="/users" element={<UsersList />} />
+          <Route path="/vote" element={<Vote />} />
           <Route path="/news" element={<NewsFeed />} />
           <Route path="/assets" element={<Assets />} />
           <Route path="/share-file" element={<ShareFile />} />

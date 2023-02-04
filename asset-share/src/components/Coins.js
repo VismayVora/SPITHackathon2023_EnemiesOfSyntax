@@ -31,7 +31,7 @@ const Coins = () => {
   }, []);
 
   return (
-    <div className="w-[40%] mx-auto  news_container">
+    <div className="w-[40%] mx-auto bg-gray-800 rounded-xl px-6 py-4 text-gray-100 mx-4">
       <h1 className="text-3xl font-bold mb-2">Coin Prices:</h1>
       {loading ? (
         <Loader backdrop content="Getting coins update..." />

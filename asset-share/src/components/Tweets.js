@@ -10,6 +10,7 @@ import { RiFlag2Line } from "react-icons/ri";
 import { AvatarGenerator } from "random-avatar-generator";
 import Sidebar from "./Sidebar";
 import Modal from "react-modal";
+import logo from "../assets/logo.png";
 const generator = new AvatarGenerator();
 
 const Card = ({ tweet, connectWithTwitterContract }) => {
@@ -42,7 +43,7 @@ const Card = ({ tweet, connectWithTwitterContract }) => {
   };
   return (
     <div
-      className="mb-8 bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2"
+      className="bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2 mt-8"
       key={tweet.tweet_msg}
     >
       <img className="w-12" src={generator.generateRandomAvatar()} />
@@ -152,8 +153,7 @@ const Tweets = () => {
     console.log(response);
   };
   return (
-    <>
-      <Navbar />
+    <div className="min-h-[100vh]">
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setIsOpen(false)}
@@ -219,51 +219,63 @@ const Tweets = () => {
         </div>
       </Modal>
       {!name ? (
-        <div className="flex">
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-          <button
-            className="text-white font-semibold bg-[#556195] px-4 py-2"
-            onClick={() => createAUser(username)}
-          >
-            Create User
-          </button>
+        <div className="h-screen px-12 py-6 bg-gradient-to-t from-blue-700 via-blue-800 to-gray-900">
+          <div className="flex flex-row items-center">
+            <img className="w-8" src={logo} />
+            <h1 className="text-white text-2xl ml-2 font-semibold flex flex-row font-poppins">
+              D<h1 className="font-light">witter</h1>
+            </h1>
+          </div>
+          <div className="flex flex-col h-[80vh] justify-evenly items-center">
+            {/* <img src={landing} /> */}
+            <h1 className="text-6xl w-[70%] text-center leading-snug font-semibold text-gray-100">
+              A safe place to share your opinions and feelings
+            </h1>
+            <input
+              className="bg-gray-900 px-12 py-4 rounded-xl w-2/5 focus:outline-none text-gray-400 text-2xl focus:shadow-2xl focus:shadow-sky-500"
+              type="text"
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Enter your username..."
+            />
+            <button
+              className="text-white text-2xl font-semibold bg-sky-500 rounded-xl px-8 py-2 whitespace-nowrap hover:shadow-2xl hover:shadow-sky-500"
+              onClick={() => createAUser(username)}
+            >
+              Create User
+            </button>
+          </div>
         </div>
       ) : (
-        <div className="bg-gray-900 text-gray-100 flex min-h-screen">
-          <Sidebar />
-          <ToastContainer />
-          <div className="p-8 bg-gray-800 w-[60%] rounded-xl">
-            <div className="flex justify-between mb-8">
-              <h1 className="text-5xl font-bold">Home</h1>
-              <button
-                className="px-12 py-1 uppercase text-xl bg-sky-500 rounded-xl"
-                onClick={() => setIsOpen(true)}
-              >
-                Add Tweet
-              </button>
-            </div>
-            <div>
-              {tweets.length > 0 ? (
-                tweets.map((tweet) => (
-                  <Card
-                    connectWithTwitterContract={connectWithTwitterContract}
-                    tweet={tweet}
-                  />
-                ))
-              ) : (
-                <>
-                  <h1 className="text-2xl text-gray-400">No Tweets</h1>
-                </>
-              )}
+        <div className="bg-gray-900 text-gray-100 min-h-screen">
+          <Navbar />
+          <div className="flex">
+            <Sidebar />
+            <ToastContainer />
+            <div className="p-8 bg-gray-800 w-[60%] rounded-xl">
+              <div className="flex justify-between">
+                <h1 className="text-5xl font-bold">Home</h1>
+                <button
+                  className="px-12 py-1 uppercase text-xl bg-sky-500 rounded-xl"
+                  onClick={() => setIsOpen(true)}
+                >
+                  Add Tweet
+                </button>
+              </div>
+              <div>
+                {tweets.length > 0 ? (
+                  tweets.map((tweet) => <Card tweet={tweet} />)
+                ) : (
+                  <>
+                    <h1 className="text-2xl text-gray-400 mt-8">No Tweets</h1>
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

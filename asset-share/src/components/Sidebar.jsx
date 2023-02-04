@@ -10,6 +10,7 @@ import {
   RiAdminLine,
   RiFile2Fill,
 } from "react-icons/ri";
+import { MdOutlineReport } from "react-icons/md";
 
 const Sidebar = () => {
   const { connectWithTwitterContract, account } = useContext(FileAppContext);
@@ -28,45 +29,45 @@ const Sidebar = () => {
   return (
     <div className="flex flex-col w-[20%] items-start py-8 px-12 gap-6 bg-gray-900">
       <div className="flex gap-4 cursor-pointer">
-        <RiHome7Line className="text-3xl text-white" />
+        <RiHome7Line className="text-3xl text-gray-100" />
         <h1
           onClick={() => {
             navigate("/");
           }}
-          className="text-white text-xl"
+          className="text-gray-100 text-xl"
         >
           Home
         </h1>
       </div>
       <div className="flex gap-4 cursor-pointer">
-        <RiChat1Line className="text-3xl text-white" />
+        <RiChat1Line className="text-3xl text-gray-100" />
         <h1
           onClick={() => {
             navigate("/chat");
           }}
-          className="text-white text-xl"
+          className="text-gray-100 text-xl"
         >
           Chat
         </h1>
       </div>
       <div className="flex gap-4 cursor-pointer">
-        <RiUserLine className="text-3xl text-white" />
+        <RiUserLine className="text-3xl text-gray-100" />
         <h1
           onClick={() => {
             navigate("/users");
           }}
-          className="text-white text-xl"
+          className="text-gray-100 text-xl"
         >
           Users
         </h1>
       </div>
       <div className="flex gap-4 cursor-pointer">
-        <RiNewspaperLine className="text-3xl text-white" />
+        <RiNewspaperLine className="text-3xl text-gray-100" />
         <h1
           onClick={() => {
             navigate("/news");
           }}
-          className="text-white text-xl"
+          className="text-gray-100 text-xl"
         >
           News
         </h1>
@@ -96,12 +97,23 @@ const Sidebar = () => {
         </div>
       ) : null}
       <div className="flex gap-4 cursor-pointer">
+        <MdOutlineReport className="text-3xl text-gray-100" />
+        <h1
+          onClick={() => {
+            navigate("/vote");
+          }}
+          className="text-gray-100 text-xl"
+        >
+          Vote
+        </h1>
+      </div>
+      <div className="flex gap-4 cursor-pointer">
         <RiLogoutBoxLine className="text-3xl text-red-500" />
         <h1
           onClick={() => {
             navigate("/news");
           }}
-          className="text-white text-xl text-red-500"
+          className="text-xl text-red-500"
         >
           Logout
         </h1>
