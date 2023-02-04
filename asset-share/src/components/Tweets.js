@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Web3Storage } from "web3.storage";
 import { FileAppContext } from "../context/FileContext";
-import Modal from "react-modal";
 import { OpenAIApi, Configuration } from "openai";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
@@ -10,19 +9,50 @@ import Navbar from "./Navbar";
 import { RiFlag2Line } from "react-icons/ri";
 import { AvatarGenerator } from "random-avatar-generator";
 import Sidebar from "./Sidebar";
+import Modal from "react-modal";
 const generator = new AvatarGenerator();
 
-const Card = ({ tweet }) => {
+const Card = ({ tweet, connectWithTwitterContract }) => {
+  const reportATweet = async () => {
+    try {
+      const contract = await connectWithTwitterContract();
+      const response = await contract.checkIfAlreadyReported(
+        parseInt(tweet.uid._hex)
+      );
+      const res = await axios.post(
+        `http://44f1-125-99-120-242.ngrok.io/report_tweet/${parseInt(
+          tweet.uid._hex
+        )}/`
+      );
+      console.log(response);
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+      toast.error("Already Reported", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
   return (
     <div
-      className="bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2"
+      className="mb-8 bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2"
       key={tweet.tweet_msg}
     >
       <img className="w-12" src={generator.generateRandomAvatar()} />
       <div>
         <div className="flex justify-between items-center mb-1">
           <h1 className="text-3xl font-semibold">{tweet.userName}</h1>
-          <button className="p-2 rounded-full hover:bg-red-200">
+          <button
+            onClick={() => reportATweet()}
+            className="p-2 rounded-full hover:bg-red-200"
+          >
             <RiFlag2Line className="text-2xl text-red-700" />
           </button>
         </div>
@@ -46,11 +76,12 @@ const Tweets = () => {
   const [file, setFile] = useState(null);
   const [tweets, setTweets] = useState([]);
   const [imgurl, setImgUrl] = useState("");
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [loading, setLoading] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
   const fetchTweets = async () => {
     const contract = await connectWithTwitterContract();
     const tweets = await contract.getTweets();
+    const owner = await contract.owner();
+    console.log(owner);
     setTweets(tweets);
     console.log(tweets);
   };
@@ -127,63 +158,64 @@ const Tweets = () => {
         isOpen={modalIsOpen}
         onRequestClose={() => setIsOpen(false)}
         contentLabel="Example Modal"
-        className="w-[90vw] h-[90vh] px-12 py-8 bg-gray-900 text-gray-100 rounded-xl mx-auto mt-[5vh]"
       >
-        <h1 className="text-4xl font-semibold mb-4">Post Tweet</h1>
-        <h1>Add Description</h1>
-        <textarea
-          className="bg-gray-800 px-4 py-2 rounded-xl my-2 w-full focus:outline-none text-gray-400 resize-none"
-          rows={5}
-          value={tweetText}
-          onChange={(e) => setTweetText(e.target.value)}
-          placeholder="Enter description ..."
-        />
-        <h1>Add media</h1>
-        <input
-          className="accent-gray-900 my-2"
-          name="media"
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-        />
-        <h1 className="text-2xl my-2 font-bold">OR</h1>
-        <h1>Use AI to generate Image for your tweet</h1>
-        <div className="flex my-2 gap-4">
-          <input
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-            type="text"
-            placeholder="Enter Tweet"
-            className="bg-gray-800 px-4 py-2 rounded-xl w-full focus:outline-none text-gray-400"
+        <div className="p-8 w-[90vw] h-fit overflow-y-scroll bg-gray-900 text-gray-100 rounded-xl">
+          <h1 className="text-4xl font-semibold mb-4">Post Tweet</h1>
+          <h1>Add Description</h1>
+          <textarea
+            className="bg-gray-800 px-4 py-2 rounded-xl my-2 w-full focus:outline-none text-gray-400 resize-none"
+            rows={5}
+            value={tweetText}
+            onChange={(e) => setTweetText(e.target.value)}
+            placeholder="Enter description ..."
           />
-          <button
-            className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
-            onClick={() => generateImage()}
-          >
-            Generate Image
-          </button>
-        </div>
-        {imgurl.length > 0 ? (
-          <div>
-            <img className="h-32 w-32 rounded-xl" src={imgurl} />
+          <h1>Add media</h1>
+          <input
+            className="accent-gray-900 my-2"
+            name="media"
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+          <h1 className="text-2xl my-2 font-bold">OR</h1>
+          <h1>Use AI to generate Image for your tweet</h1>
+          <div className="flex my-2 gap-4">
+            <input
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              type="text"
+              placeholder="Enter Tweet"
+              className="bg-gray-800 px-4 py-2 rounded-xl w-full focus:outline-none text-gray-400"
+            />
+            <button
+              className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
+              onClick={() => generateImage()}
+            >
+              Generate Image
+            </button>
           </div>
-        ) : (
-          <div className="h-32 w-32 bg-gray-800 rounded-xl"></div>
-        )}
-        <div className="flex my-2 gap-4">
-          <button
-            className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
-            onClick={() => tweetAI()}
-          >
-            Tweet AI Generated Photo
-          </button>
-          <button
-            className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
-            onClick={() => {
-              tweetKaro();
-            }}
-          >
-            Tweet Karo Dost
-          </button>
+          {imgurl.length > 0 ? (
+            <div>
+              <img className="h-32 w-32 rounded-xl" src={imgurl} />
+            </div>
+          ) : (
+            <div className="h-32 w-32 bg-gray-800 rounded-xl"></div>
+          )}
+          <div className="flex my-2 gap-4">
+            <button
+              className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
+              onClick={() => tweetAI()}
+            >
+              Tweet AI Generated Photo
+            </button>
+            <button
+              className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
+              onClick={() => {
+                tweetKaro();
+              }}
+            >
+              Tweet Karo Dost
+            </button>
+          </div>
         </div>
       </Modal>
       {!name ? (
@@ -201,7 +233,7 @@ const Tweets = () => {
           </button>
         </div>
       ) : (
-        <div className="bg-gray-900 text-gray-100 flex">
+        <div className="bg-gray-900 text-gray-100 flex min-h-screen">
           <Sidebar />
           <ToastContainer />
           <div className="p-8 bg-gray-800 w-[60%] rounded-xl">
@@ -216,7 +248,12 @@ const Tweets = () => {
             </div>
             <div>
               {tweets.length > 0 ? (
-                tweets.map((tweet) => <Card tweet={tweet} />)
+                tweets.map((tweet) => (
+                  <Card
+                    connectWithTwitterContract={connectWithTwitterContract}
+                    tweet={tweet}
+                  />
+                ))
               ) : (
                 <>
                   <h1 className="text-2xl text-gray-400">No Tweets</h1>

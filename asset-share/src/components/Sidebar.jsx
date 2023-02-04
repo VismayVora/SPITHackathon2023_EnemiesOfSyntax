@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { FileAppContext } from "../context/FileContext";
 import {
@@ -7,10 +7,23 @@ import {
   RiUserLine,
   RiNewspaperLine,
   RiLogoutBoxLine,
+  RiAdminLine,
+  RiFile2Fill,
 } from "react-icons/ri";
 
 const Sidebar = () => {
-  const { name } = useContext(FileAppContext);
+  const { connectWithTwitterContract, account } = useContext(FileAppContext);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    isOwner();
+  }, []);
+  const isOwner = async () => {
+    const contract = await connectWithTwitterContract();
+    const ownerAddress = await contract.owner();
+    if (ownerAddress.toLowerCase() === account.toLowerCase()) {
+      setIsAdmin(true);
+    }
+  };
   const navigate = useNavigate();
   return (
     <div className="flex flex-col w-[20%] items-start py-8 px-12 gap-6 bg-gray-900">
@@ -58,6 +71,30 @@ const Sidebar = () => {
           News
         </h1>
       </div>
+      <div className="flex gap-4 cursor-pointer">
+        <RiFile2Fill className="text-3xl text-white" />
+        <h1
+          onClick={() => {
+            navigate("/share-file");
+          }}
+          className="text-white text-xl"
+        >
+          Share File
+        </h1>
+      </div>
+      {isAdmin ? (
+        <div className="flex gap-4 cursor-pointer">
+          <RiAdminLine className="text-3xl text-white" />
+          <h1
+            onClick={() => {
+              navigate("/admin");
+            }}
+            className="text-white text-xl"
+          >
+            Admin
+          </h1>
+        </div>
+      ) : null}
       <div className="flex gap-4 cursor-pointer">
         <RiLogoutBoxLine className="text-3xl text-red-500" />
         <h1
