@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import UsersList from "./components/UsersList";
 import NewsFeed from "./components/NewsFeed";
 import Assets from "./components/Assets";
+import Tweets from "./components/Tweets";
 function App() {
   return (
     <>
@@ -16,7 +17,8 @@ function App() {
           <Route path="/users" element={<UsersList />} />
           <Route path="/news" element={<NewsFeed />} />
           <Route path="/assets" element={<Assets />} />
-          <Route path="/" element={<ShareFile />} />
+          <Route path="/share-file" element={<ShareFile />} />
+          <Route path="/" element={<Tweets />} />
         </Routes>
       </Router>
     </>

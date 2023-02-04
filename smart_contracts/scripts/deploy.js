@@ -7,6 +7,10 @@ const main = async () => {
   const chatapp = await ChatApp.deploy();
   await chatapp.deployed();
   console.log("Chat App deployed to: ", chatapp.address);
+  const TwitterApp = await hre.ethers.getContractFactory("Twitter");
+  const twitterapp = await TwitterApp.deploy();
+  await twitterapp.deployed();
+  console.log("Chat App deployed to: ", twitterapp.address);
 };
 
 const runMain = async () => {

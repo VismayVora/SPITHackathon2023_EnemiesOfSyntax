@@ -12,9 +12,8 @@ const Navbar = () => {
   return (
     <div className="flex flex-row p-4 items-center justify-between bg-[#10141A]">
       <div className="flex flex-row items-center">
-        <img src={logo} />
         <h1 className="text-white text-2xl ml-4 font-semibold flex flex-row font-poppins">
-          Block <h1 className="font-light"> Crate</h1>
+          D <h1 className="font-light">witter</h1>
         </h1>
       </div>
       <div className="flex flex-row items-center flex-1 justify-evenly">

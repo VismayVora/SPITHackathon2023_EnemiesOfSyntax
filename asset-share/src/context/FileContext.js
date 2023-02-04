@@ -6,6 +6,7 @@ import {
   connectWallet,
   connectWithChatContract,
   connectWithContract,
+  connectWithTwitterContract,
 } from "../api";
 import axios from "axios";
 export const FileAppContext = React.createContext();
@@ -25,6 +26,7 @@ export const FileAppProvider = ({ children }) => {
   const [currentUserName, setCurrentUserName] = useState("");
   const [currentUserAddress, setCurrentUserAddress] = useState("");
   const [balance, setBalance] = useState("");
+  const [tweets, setTweets] = useState([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -222,6 +224,12 @@ export const FileAppProvider = ({ children }) => {
     setCurrentUserAddress(userAddress);
   };
 
+  const fetchTweets = async () => {
+    const contract = await connectWithTwitterContract();
+    const tweets = await contract.getTweets();
+    setTweets(tweets);
+  };
+
   return (
     <FileAppContext.Provider
       value={{
@@ -245,6 +253,9 @@ export const FileAppProvider = ({ children }) => {
         currentUserAddress,
         currentUserName,
         balance,
+        fetchTweets,
+        tweets,
+        connectWithTwitterContract,
       }}
     >
       {children}

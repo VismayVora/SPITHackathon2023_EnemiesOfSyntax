@@ -5,6 +5,8 @@ import {
   ChatAppAddress,
   FileShareABI,
   FileShareAddress,
+  TwitterAppABI,
+  TwitterAppAddress,
 } from "../constants";
 export const checkIfWalletIsConnected = async () => {
   try {
@@ -44,6 +46,14 @@ export const fetchChatContract = (signerOrProvider) => {
   return new ethers.Contract(ChatAppAddress, ChatAppABI, signerOrProvider);
 };
 
+export const fetchTwitterContract = async (signerOrProvider) => {
+  return new ethers.Contract(
+    TwitterAppAddress,
+    TwitterAppABI,
+    signerOrProvider
+  );
+};
+
 export const connectWithContract = async () => {
   try {
     const web3 = new web3modal();
@@ -65,6 +75,19 @@ export const connectWithChatContract = async () => {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     const contract = fetchChatContract(signer);
+    return contract;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const connectWithTwitterContract = async () => {
+  try {
+    const web3 = new web3modal();
+    const connection = await web3.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = fetchTwitterContract(signer);
     return contract;
   } catch (e) {
     console.log(e);
