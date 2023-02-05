@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, Text, View, StyleSheet, TouchableOpacity, ActivityIndicator,Platform, PermissionsAndroid } from 'react-native';
+import { FlatList, Image, Text, View, StyleSheet, TouchableOpacity, ActivityIndicator, Platform, PermissionsAndroid } from 'react-native';
 import Tts from 'react-native-tts';
 import RNShake from 'react-native-shake';
 import Mailer from 'react-native-mail';
@@ -13,42 +13,42 @@ import FilePickerManager from 'react-native-file-picker';
 // import RNGetRealPath from 'react-native-get-real-path';
 
 
-// console. disableYellowBox = true;
+console.disableYellowBox = true;
 const jobs = [
   {
     id: 1,
-    title: 'Customer Service Representative',
+    title: 'Infertility Man',
     company: 'Ability Beyond Disability',
     description: 'Provide excellent customer service to clients with disabilities',
-    logo: 'https://ngofeed.com/wp-content/uploads/2019/11/Smile_Foundation_Logo.jpg.webp',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShelLHtdF0IM7_5niOYGPGwkxLNbjyfFyvIQ&usqp=CAU',
   },
   {
     id: 2,
-    title: 'Community Outreach Coordinator',
+    title: 'Genocide Adama',
     company: 'Access Living',
     description: 'Develop and implement community outreach programs for people with disabilities',
-    logo: 'https://ngofeed.com/wp-content/uploads/2021/08/PNG-Format_New-Logo_Dark-Background-300x240.png.webp',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfR5w8cb31BqEpE-M0NmlGX325q6VpAy8xUw&usqp=CAU',
   },
   {
     id: 3,
-    title: 'Human Resources Specialist',
+    title: 'Countering Hate Speech',
     company: 'Disabled Sports USA',
     description: 'Develop and implement human resources policies and procedures for a non-profit organization',
-    logo: 'https://ngofeed.com/wp-content/uploads/2019/11/giveindia-300x106.jpg.webp',
+    logo: 'https://i0.wp.com/www.gktoday.in/wp-content/uploads/2022/06/international-day-for-countering-hate-speech.png?fit=1200%2C675&ssl=1&w=640',
   },
   {
     id: 4,
-    title: 'Web Designer',
+    title: 'Potentially Sensitive',
     company: 'Disabled and Proud',
     description: 'Design and maintain a website for a non-profit organization promoting disability rights',
-    logo: 'https://ngofeed.com/wp-content/uploads/2019/11/Goonj-logo-300x188.jpg.webp',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzCggEfh1a4GgesmJz3J_PVFflmHk5XjtvSw&usqp=CAU',
   },
   {
     id: 5,
-    title: 'Marketing Manager',
+    title: 'Tap to see',
     company: 'United Cerebral Palsy',
     description: 'Develop and implement marketing strategies for a non-profit organization',
-    logo: 'https://ngofeed.com/wp-content/uploads/2019/11/Care-India-300x300.jpg.webp',
+    logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0sCAq8LbvDww2vjOTULzPQgP0U-ZG1AwC1w&usqp=CAU',
   },
   {
     id: 6,
@@ -57,42 +57,9 @@ const jobs = [
     description: 'Analyze financial data and provide recommendations to support a non-profit organization',
     logo: 'https://ngofeed.com/wp-content/uploads/2019/11/Nanhi-kali-logo.jpg.webp',
   },
-  {
-    id: 7,
-    title: 'Program Coordinator',
-    company: 'Paralyzed Veterans of America',
-    description: 'Coordinate programs and services for veterans with disabilities',
-    logo: 'https://ngofeed.com/wp-content/uploads/2019/11/HelpAge-India.jpg.webp',
-  },
-  {
-    id: 8,
-    title: 'Grant Writer',
-    company: 'Disabled American Veterans',
-    description: 'Write grant proposals to secure funding for programs and services for veterans with disabilities',
-    logo: 'https://ngofeed.com/wp-content/uploads/2019/11/Pratham-logo-e1575048400556-81x70.jpg.webp',
-  }
 ];
 
-
-const filePicker = () => {
-  FilePickerManager.showFilePicker(null, (response) => {
-    // setFilePath(response.uri);
-    // console.log(
-    //   // response.uri,
-    //   // response.type,
-    //   // response.fileName,
-    //   // response.fileSize,
-    //   response.
-    // );
-  });
-
-
-  
-};
-
-
-
-const JobListing = ({ title, company, description, logo ,navigation}) => (
+const JobListing = ({ title, company, description, logo }) => (
   <View style={styles.jobContainer}>
     <View style={styles.logoContainer}>
       <Image source={{ uri: logo }} style={styles.logo} />
@@ -103,7 +70,7 @@ const JobListing = ({ title, company, description, logo ,navigation}) => (
       <Text style={styles.jobDescription}>{description}</Text>
     </View>
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.applyButton} onPress={() => navigation.navigate('VoteNow')}>
+      <TouchableOpacity style={styles.applyButton}>
         <Text style={styles.applyButtonText}>Vote Now</Text>
       </TouchableOpacity>
     </View>
@@ -136,15 +103,15 @@ const sendEmail = () => {
       error,
       event,
       [
-        {text: 'Ok', onPress: () => console.log('OK: Email Error Response')},
-        {text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response')}
+        { text: 'Ok', onPress: () => console.log('OK: Email Error Response') },
+        { text: 'Cancel', onPress: () => console.log('CANCEL: Email Error Response') }
       ],
       { cancelable: true }
     )
   });
 };
 
-const Vote = ({}) => {
+const Vote = ({ navigation }) => {
 
 
 
@@ -235,9 +202,10 @@ const Vote = ({}) => {
   }, []);
 
   return (
-    <View style={{ flex: 1 ,backgroundColor:'white'}}>
-      <Text style={{ color: "#0ea5e9", fontSize: 25, marginLeft: 20, marginBottom: 20, marginTop: 10 ,alignContent:'center',alignSelf:'center'}}>Voting!</Text>
-
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <TouchableOpacity onPress={() => navigation.navigate('VoteNow')}>
+        <Text style={{ color: "#0ea5e9", fontSize: 25, marginLeft: 20, marginBottom: 20, marginTop: 10, alignContent: 'center', alignSelf: 'center' }}>Voting!</Text>
+      </TouchableOpacity>
       <FlatList
         data={jobs}
         renderItem={({ item }) => (
@@ -266,7 +234,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
     alignItems: 'center',
-    height:150
+    height: 150
   },
   logoContainer: {
     width: 50,

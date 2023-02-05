@@ -30,7 +30,7 @@ const VoteNow = ({ navigation }) => {
                             borderBottomColor: colors.textAfter,
                             color: colors.text,
                         }}
-                        placeholder="Enter skills, designations, companies">
+                        placeholder="Search for trends">
                     </TextInput>
                     <TextInput placeholderTextColor={colors.placeholder2}
                         style={{
@@ -38,7 +38,7 @@ const VoteNow = ({ navigation }) => {
                             borderBottomColor: colors.textAfter,
                             color: colors.text,
                         }}
-                        placeholder="Enter location">
+                        placeholder="Enter your review on it">
                     </TextInput>
                 </View>
                 <View style={styles.view}>

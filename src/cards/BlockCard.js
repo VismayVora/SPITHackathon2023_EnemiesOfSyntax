@@ -19,7 +19,7 @@ const BlockCard = ({ style, imageStyle, item, onPress }) => {
           <Title>{title}</Title>
           <Subtitle>{desc}</Subtitle>
           <TouchableOpacity>
-            <Text style={styles.viewMore}>View Jobs</Text>
+            <Text style={styles.viewMore}>Vote</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -52,6 +52,7 @@ import AllEvents from '../pages/AllEvents';
 import { Notifications } from '../twitter/notifications';
 import WrappedApp from '../twitter/containers/main/profile/profileScreen';
 import { Status } from '../pages/Status';
+import Chat from '../pages/Chat/Chat';
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -139,7 +140,7 @@ function Tabs() {
       initialRouteName="Jobs"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          if (route.name === 'Home') {
+          if (route.name === 'Info') {
             return <Entypo name="home" size={27} color={color} />;
           }
           if (route.name === 'Voting') {
@@ -183,7 +184,7 @@ function Tabs() {
       />
 
       <Tab.Screen
-        name="Home"
+        name="Info"
         component={HomeScreens}
         options={{ headerShown: false }}
       />
@@ -318,7 +319,7 @@ const AppStack = () => {
         }}>
 
         <Drawer.Screen
-          name="Tabs"
+          name="Home"
           component={AllTabs}
           options={{
             drawerIcon: ({ color }) => (
@@ -354,16 +355,16 @@ const AppStack = () => {
             ),
           }}
         />
-        {/* <Drawer.Screen
-          name="Careertv"
-          component={Careertv}
+        <Drawer.Screen
+          name="Chat"
+          component={Chat}
           options={{
             headerShown: false,
             drawerIcon: ({ color }) => (
-              <Ionicons name="play-circle-outline" size={22} color={color} />
+              <Ionicons name="cloud" size={22} color={color} />
             ),
           }}
-        /> */}
+        />
         <Drawer.Screen
           name="Status"
           component={Status}

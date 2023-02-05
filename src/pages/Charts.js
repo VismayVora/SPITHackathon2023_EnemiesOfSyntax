@@ -140,14 +140,14 @@ export default function Charts() {
                     chartConfig={chartConfig}
                     verticalLabelRotation={30}
                 />
-                <Text style={{ fontSize: 20, textAlign: 'center' ,margin:10}}>Company count per month</Text>
+                <Text style={{ fontSize: 20, textAlign: 'center' ,margin:10}}>Voting Trends</Text>
                 <LineChart
                     data={linedata}
                     width={width * 0.8}
                     height={height * 0.3}
                     chartConfig={chartConfig}
                 />
-                <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>State Funded Companies</Text>
+                <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>Most Sensitive Content</Text>
                 <ProgressChart
                     data={progressdata}
                     width={width * 0.8}
@@ -157,7 +157,7 @@ export default function Charts() {
                     chartConfig={chartConfig}
                     hideLegend={false}
                 />
-                <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>Top 5 funded companies</Text>
+                <Text style={{ fontSize: 20, textAlign: 'center', margin: 10 }}>Consequences</Text>
             </View>
         </ScrollView>
     );

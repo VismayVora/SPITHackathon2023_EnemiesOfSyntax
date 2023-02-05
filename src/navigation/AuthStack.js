@@ -16,19 +16,6 @@ import Profile2 from '../components/Profile/Profile2';
 import AddStartups from '../components/Profile/AddStartups';
 import LocationTracer from '../pages/LocationTracer';
 import Splash from '../pages/Splash';
-// import AllTabs from './AppStack'
-// import Splash from '../pages/Splash';
-// import { Feed } from '../twitter/feed';
-// import { Details } from '../twitter/Chats';
-// import { AllNotifications } from '../twitter/all';
-// import { BottomTabs } from '../twitter/bottomTabs';
-// import DirectMessageScreen from '../twitter/containers/main/home/DirectMessage/DirectMessageScreen';
-// import StoryScreen from '../twitter/containers/main/home/story/StoryScreen';
-// import TabNavigator from '../twitter/containers/main/TabNavigator';
-// import colors from '../twitter/res/colors';
-// import {Image, TouchableOpacity,View,Text } from 'react-native';
-// import images from '../twitter/res/images';
-
 const Stack = createNativeStackNavigator();
 const OnboardingStack = createNativeStackNavigator();
 
@@ -82,86 +69,10 @@ const Onboarding = () => {
 const AuthStack = ({ navigation }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} independent={true}>
-      {/* <Stack.Screen
-        name="Bottom"
-        component={BottomTabs}
-        options={{ headerShown: false }}></Stack.Screen> */}
-      {/* <Stack.Screen
-        name="MainScreen"
-        component={TabNavigator}
-        options={{title: '', headerShown: false}}
-      />
-      
-      <Stack.Screen
-        name="DirectMessageScreen"
-        component={DirectMessageScreen}
-        options={({navigation}) => ({
-          //headerTransparent: true,
-          headerTitle: () => (
-            <View>
-              <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
-                johndoe
-              </Text>
-            </View>
-          ),
-          headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: colors.bottomBackGround,
-            shadowColor: colors.seperatorLineColor,
-          },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('MainScreen')}>
-              <Image
-                source={images.dmBackButton}
-                style={{width: 20, height: 20, marginStart: 10}}
-              />
-            </TouchableOpacity>
-          ),
-          headerRight: () => (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TouchableOpacity
-                onPress={() => console.log('Pressed Write in DM')}
-                style={{flexDirection: 'row'}}>
-                <Image
-                  source={images.write}
-                  style={{width: 25, height: 25, marginEnd: 20}}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => console.log('Pressed Video Camera in DM')}
-                style={{flexDirection: 'row'}}>
-                <Image
-                  source={images.videoCamera}
-                  style={{width: 30, height: 30, marginEnd: 10}}
-                />
-              </TouchableOpacity>
-            </View>
-          ),
-        })}
-      />
-      <Stack.Screen
-        name="StoryScreen"
-        component={StoryScreen}
-        navigation={navigation}
-        options={{
-          headerStyle: {backgroundColor: 'black', shadowColor: 'black'},
-          title: '',
-          headerLeft: () => <View></View>,
-        }}
-      /> */}
-
       <Stack.Screen
         name="Splash"
         component={Splash}
         options={{ headerShown: false }}></Stack.Screen>
-
-
-
       <Stack.Screen
         name="Login"
         component={Login}
