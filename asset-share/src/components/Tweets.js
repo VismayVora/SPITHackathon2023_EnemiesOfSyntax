@@ -54,14 +54,28 @@ const ScrollButton = () => {
 };
 
 const Card = ({ tweet, connectWithTwitterContract }) => {
-  const [likes, setLikes] = useState(null)
-  const [liked, setLiked] = useState(false)
+  const [likes, setLikes] = useState(null);
+  const [liked, setLiked] = useState(false);
   const reportATweet = async () => {
     try {
       const contract = await connectWithTwitterContract();
       const response = await contract.checkIfAlreadyReported(
         parseInt(tweet.uid._hex)
       );
+      if (response) {
+        toast.error("Already Reported", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        return;
+      }
       const res = await axios.post(
         `http://44f1-125-99-120-242.ngrok.io/report_tweet/${parseInt(
           tweet.uid._hex
@@ -84,21 +98,33 @@ const Card = ({ tweet, connectWithTwitterContract }) => {
     }
   };
   const getLikes = () => {
-    axios.get('http://44f1-125-99-120-242.ngrok.io/like_tweet/'+parseInt(tweet.uid._hex)+'/').then((res)=>{
-      console.log(res.data);
-      setLikes(res.data.like_count)
-    })
-  }
+    axios
+      .get(
+        "http://44f1-125-99-120-242.ngrok.io/like_tweet/" +
+          parseInt(tweet.uid._hex) +
+          "/"
+      )
+      .then((res) => {
+        console.log(res.data);
+        setLikes(res.data.like_count);
+      });
+  };
   const likeATweet = () => {
-    axios.post('http://44f1-125-99-120-242.ngrok.io/like_tweet/'+parseInt(tweet.uid._hex)+'/').then((res)=>{
-      console.log(res.data);
-      getLikes()
-      setLiked(!liked)
-    })
-  }
+    axios
+      .post(
+        "http://44f1-125-99-120-242.ngrok.io/like_tweet/" +
+          parseInt(tweet.uid._hex) +
+          "/"
+      )
+      .then((res) => {
+        console.log(res.data);
+        getLikes();
+        setLiked(!liked);
+      });
+  };
   useEffect(() => {
-    getLikes()
-  }, [tweet])
+    getLikes();
+  }, [tweet]);
   return (
     <div
       className="bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2 mt-8"

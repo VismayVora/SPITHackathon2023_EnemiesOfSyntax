@@ -100,7 +100,7 @@ const Admin = () => {
     setIds(ids);
     const allTweets = await Promise.all(
       ids.map(async (id) => {
-        const tweet = await contract.tweets(id.id);
+        const tweet = await contract.tweets(id.uid);
         return tweet;
       })
     );
