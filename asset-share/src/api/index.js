@@ -5,6 +5,8 @@ import {
   ChatAppAddress,
   FileShareABI,
   FileShareAddress,
+  NftAppABI,
+  NFTAppAddress,
   TwitterAppABI,
   TwitterAppAddress,
 } from "../constants";
@@ -54,6 +56,10 @@ export const fetchTwitterContract = async (signerOrProvider) => {
   );
 };
 
+export const fetchNftContract = async (signerOrProvider) => {
+  return new ethers.Contract(NFTAppAddress, NftAppABI, signerOrProvider);
+};
+
 export const connectWithContract = async () => {
   try {
     const web3 = new web3modal();
@@ -88,6 +94,19 @@ export const connectWithTwitterContract = async () => {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     const contract = fetchTwitterContract(signer);
+    return contract;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const connectWithNftContract = async () => {
+  try {
+    const web3 = new web3modal();
+    const connection = await web3.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    const contract = fetchNftContract(signer);
     return contract;
   } catch (e) {
     console.log(e);

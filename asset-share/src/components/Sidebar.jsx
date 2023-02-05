@@ -9,6 +9,8 @@ import {
   RiLogoutBoxLine,
   RiAdminLine,
   RiFile2Fill,
+  RiInformationFill,
+  RiLandscapeLine,
 } from "react-icons/ri";
 import { MdOutlineReport } from "react-icons/md";
 
@@ -105,6 +107,17 @@ const Sidebar = () => {
           className="text-gray-100 text-xl"
         >
           Vote
+        </h1>
+      </div>
+      <div className="flex gap-4 cursor-pointer">
+        <RiLandscapeLine className="text-3xl text-gray-100" />
+        <h1
+          onClick={() => {
+            navigate("/nfts");
+          }}
+          className="text-gray-100 text-xl"
+        >
+          NFTs
         </h1>
       </div>
       <div className="flex gap-4 cursor-pointer">

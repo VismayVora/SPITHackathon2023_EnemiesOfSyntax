@@ -7,6 +7,8 @@ import Assets from "./components/Assets";
 import Tweets from "./components/Tweets";
 import Admin from "./components/Admin";
 import Vote from "./components/Vote";
+import Profile from "./components/Profile";
+import Nfts from "./components/Nfts";
 function App() {
   return (
     <>
@@ -20,6 +22,8 @@ function App() {
           <Route path="/assets" element={<Assets />} />
           <Route path="/share-file" element={<ShareFile />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/nfts" element={<Nfts />} />
           <Route path="/" element={<Tweets />} />
         </Routes>
       </Router>

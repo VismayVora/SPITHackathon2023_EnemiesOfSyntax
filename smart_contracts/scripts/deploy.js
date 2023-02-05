@@ -10,7 +10,11 @@ const main = async () => {
   const TwitterApp = await hre.ethers.getContractFactory("Twitter");
   const twitterapp = await TwitterApp.deploy();
   await twitterapp.deployed();
-  console.log("Chat App deployed to: ", twitterapp.address);
+  console.log("Twitter App deployed to: ", twitterapp.address);
+  const DweetNftApp = await hre.ethers.getContractFactory("DweetNft");
+  const dweetnftapp = await DweetNftApp.deploy();
+  await dweetnftapp.deployed();
+  console.log("Nft app deployed to: ", dweetnftapp.address);
 };
 
 const runMain = async () => {

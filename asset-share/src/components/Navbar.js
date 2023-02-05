@@ -22,10 +22,20 @@ const Navbar = () => {
       </div>
       <div className="flex items-center gap-2 rounded-xl border border-gray-600 hover:border-gray-400 min-w-[50%] text-gray-100 px-4 py-2">
         <FiSearch className="text-xl" />
-        <input placeholder="Search for something here..." className="bg-transparent focus:outline-none w-full" />
+        <input
+          placeholder="Search for something here..."
+          className="bg-transparent focus:outline-none w-full"
+        />
       </div>
       <div className="flex gap-4 items-center">
-        {name ? <h1 className="text-white text-2xl">{name}</h1> : null}
+        {name ? (
+          <h1
+            onClick={() => navigate("/profile")}
+            className="text-white text-2xl cursor-pointer"
+          >
+            {name}
+          </h1>
+        ) : null}
         <img className="w-8" src={generator.generateRandomAvatar()} />
       </div>
     </div>
