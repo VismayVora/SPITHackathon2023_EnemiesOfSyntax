@@ -18,9 +18,15 @@ Decentralized
 <ul>Once a 51% consensus is reached , the tweet gets automatically removed or stays based on the final verdict of voting.</ul>
 
 Screenshots:
+Home Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803382-b9be8a56-c34b-4757-a142-f05d2abaf8ec.png)
+Admin Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803389-b4b584dd-3435-4d8a-abb3-9d676b00bb61.png)
+Voting Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803399-8276e17e-113d-45d8-a631-174c10f0dd09.png)
+Chat Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803407-d4042e35-774d-442f-966c-7558dd86a222.png)
+News Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803414-afab688d-481c-4076-b850-b882a1042800.png)
+NFTs Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803417-9e8d288b-7fc7-4a16-9deb-0a14a189e711.png)
