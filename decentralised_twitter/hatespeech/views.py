@@ -129,7 +129,7 @@ class ReportTweetView(APIView):
                 return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
         else:
             try:
-                tweet = Tweet.objects.get(id=pk)
+                tweet = Tweet.objects.get(uid=pk)
             except Tweet.DoesNotExist:
                 content = {'detail': 'No such tweet'}
                 return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
@@ -141,18 +141,18 @@ class ReportTweetView(APIView):
 
     def post(self, request, pk):
         try:
-            tweet_obj = Tweet.objects.get(id=pk)
+            tweet_obj = Tweet.objects.get(uid=pk)
             tweet_obj.report_count += 1
             tweet_obj.save()
         except Tweet.DoesNotExist:
-            tweet_obj = ReportTweet(report_count=1,like_count=0)
+            tweet_obj = Tweet(report_count=1,like_count=0)
             tweet_obj.save()
         tweetDetails = TweetSerializer(tweet_obj, many=False)
         return JsonResponse(tweetDetails.data, status = status.HTTP_202_ACCEPTED)
 
     def delete(self,request,pk):
         try:
-            tweet = Tweet.objects.get(id = pk)
+            tweet = Tweet.objects.get(uid = pk)
         except Tweet.DoesNotExist:
             content = {'detail': 'No such tweet available'}
             return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
@@ -269,7 +269,7 @@ class LikeTweetView(APIView):
                 return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
         else:
             try:
-                tweet = Tweet.objects.get(id=pk)
+                tweet = Tweet.objects.get(uid=pk)
             except Tweet.DoesNotExist:
                 content = {'detail': 'No such liked tweet'}
                 return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)
@@ -281,7 +281,7 @@ class LikeTweetView(APIView):
 
     def post(self, request, pk):
         try:
-            tweet_obj = Tweet.objects.get(id=pk)
+            tweet_obj = Tweet.objects.get(uid=pk)
             tweet_obj.like_count += 1
             tweet_obj.save()
         except Tweet.DoesNotExist:
@@ -292,7 +292,7 @@ class LikeTweetView(APIView):
 
     def delete(self,request,pk):
         try:
-            tweet = Tweet.objects.get(id = pk)
+            tweet = Tweet.objects.get(uid = pk)
         except Tweet.DoesNotExist:
             content = {'detail': 'No such reported tweet available'}
             return JsonResponse(content, status = status.HTTP_404_NOT_FOUND)

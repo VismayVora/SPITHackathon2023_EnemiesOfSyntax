@@ -8,6 +8,7 @@ from django.db import models
 #     like_count = models.PositiveIntegerField()
 
 class Tweet(models.Model):
+    uid = models.PositiveBigIntegerField(primary_key=True)
     report_count = models.PositiveIntegerField()
     like_count = models.PositiveIntegerField()
 
