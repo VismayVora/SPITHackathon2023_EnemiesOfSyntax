@@ -18,6 +18,9 @@ Decentralized
 <ul>Once a 51% consensus is reached , the tweet gets automatically removed or stays based on the final verdict of voting.</ul>
 
 Screenshots:
+
+Website:
+
 Home Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803382-b9be8a56-c34b-4757-a142-f05d2abaf8ec.png)
 Admin Page:
