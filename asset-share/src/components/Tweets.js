@@ -58,7 +58,9 @@ const Card = ({ tweet, connectWithTwitterContract }) => {
           </button>
         </div>
         <h1 className="text-gray-400">{tweet.tweet_msg}</h1>
-        <img className="rounded-xl my-2" src={tweet.image_url} />
+        {tweet.image_url === "NO IMAGE" ? null : (
+          <img className="rounded-xl my-2" src={tweet.image_url} />
+        )}
       </div>
     </div>
   );
@@ -117,20 +119,24 @@ const Tweets = () => {
     );
     console.log(responseText.data.hate);
     if (!responseText.data.hate) {
+      let url;
       console.log("Hello");
       const web3 = new Web3Storage({
         token:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDVlOThGNzY1YjgzRGU0NTRhM2JDMzZjMDA1MTFFNjgzZTIxNkQwQTQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjA5NDA2MTQyODQsIm5hbWUiOiJNZW50b3JEb3RzIn0.FkP0BvIf_J6_ToxB9ER-QW01uukz5W5Me-mcoT1OYJI",
       });
-
-      console.log(file);
-      const ext = file.name.split(".").pop();
-      const newFile = new File([file], file.name, { type: file.type });
-      const cid = await web3.put([newFile], {
-        name: file.name,
-      });
-      const url = `https://ipfs.io/ipfs/${cid}/${file.name}`;
-      console.log(url);
+      if (file === null) {
+        url = "NO IMAGE";
+      } else {
+        console.log(file);
+        const ext = file.name.split(".").pop();
+        const newFile = new File([file], file.name, { type: file.type });
+        const cid = await web3.put([newFile], {
+          name: file.name,
+        });
+        url = `https://ipfs.io/ipfs/${cid}/${file.name}`;
+        console.log(url);
+      }
       const contract = await connectWithTwitterContract();
       const response = await contract.addTweet(url, tweetText, name);
       console.log(response);
