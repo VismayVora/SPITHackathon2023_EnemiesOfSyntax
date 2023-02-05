@@ -145,7 +145,7 @@ class ReportTweetView(APIView):
             tweet_obj.report_count += 1
             tweet_obj.save()
         except Tweet.DoesNotExist:
-            tweet_obj = Tweet(report_count=1,like_count=0)
+            tweet_obj = Tweet(uid=pk,report_count=1,like_count=0)
             tweet_obj.save()
         tweetDetails = TweetSerializer(tweet_obj, many=False)
         return JsonResponse(tweetDetails.data, status = status.HTTP_202_ACCEPTED)
@@ -285,7 +285,7 @@ class LikeTweetView(APIView):
             tweet_obj.like_count += 1
             tweet_obj.save()
         except Tweet.DoesNotExist:
-            tweet_obj = Tweet(like_count=1)
+            tweet_obj = Tweet(uid=pk,report_count=0,like_count=1)
             tweet_obj.save()
         tweetDetails = TweetSerializer(tweet_obj, many=False)
         return JsonResponse(tweetDetails.data, status = status.HTTP_202_ACCEPTED)
