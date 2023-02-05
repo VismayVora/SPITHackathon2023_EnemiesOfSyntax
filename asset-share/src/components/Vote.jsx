@@ -83,7 +83,39 @@ const Card = ({ tweet, connectWithTwitterContract, account }) => {
       <div>
         <h1 className="text-3xl font-semibold my-2">{tweet.userName}</h1>
         <h1 className="text-gray-400">{tweet.tweet_msg}</h1>
-        <img className="rounded-xl my-2" src={tweet.image_url} />
+        {tweet.image_url.endsWith(".png") ||
+        tweet.image_url.endsWith(".jpg") ||
+        tweet.image_url.endsWith(".jpeg") ||
+        tweet.image_url.endsWith(".gif") ? (
+          <img className="rounded-xl my-2" src={tweet.image_url} />
+        ) : tweet.image_url.endsWith(".mp4") ||
+          tweet.image_url.endsWith(".mov") ||
+          tweet.image_url.endsWith(".avi") ||
+          tweet.image_url.endsWith(".mkv") ? (
+          <video className="rounded-xl my-2" controls>
+            <source
+              src={tweet.image_url}
+              type={
+                `video/` +
+                tweet.image_url.split(".")[
+                  tweet.image_url.split(".").length - 1
+                ]
+              }
+            />
+          </video>
+        ) : (
+          <audio className="rounded-xl my-2" controls>
+            <source
+              src={tweet.image_url}
+              type={
+                `audio/` +
+                tweet.image_url.split(".")[
+                  tweet.image_url.split(".").length - 1
+                ]
+              }
+            />
+          </audio>
+        )}
         <div className="flex gap-6 mt-4">
           <button
             onClick={() => casteTheVote(true)}

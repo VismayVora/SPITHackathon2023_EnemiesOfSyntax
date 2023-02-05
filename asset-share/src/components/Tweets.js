@@ -6,14 +6,56 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "./Navbar";
-import { RiFlag2Line } from "react-icons/ri";
+import {
+  RiFlag2Line,
+  RiChat1Line,
+  RiRepeatLine,
+  RiHeartLine,
+  RiShareForwardBoxFill,
+  RiHeartFill,
+} from "react-icons/ri";
+import { FaArrowCircleUp } from "react-icons/fa";
 import { AvatarGenerator } from "random-avatar-generator";
 import Sidebar from "./Sidebar";
 import Modal from "react-modal";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 const generator = new AvatarGenerator();
 
+const ScrollButton = () => {
+  const [visible, setVisible] = useState(false);
+
+  const toggleVisible = () => {
+    const scrolled = document.documentElement.scrollTop;
+    if (scrolled > 300) {
+      setVisible(true);
+    } else if (scrolled <= 300) {
+      setVisible(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  window.addEventListener("scroll", toggleVisible);
+
+  return (
+    <button className="fixed bottom-4 right-4 text-5xl text-sky-500">
+      <FaArrowCircleUp
+        onClick={scrollToTop}
+        style={{ display: visible ? "inline" : "none" }}
+      />
+    </button>
+  );
+};
+
 const Card = ({ tweet, connectWithTwitterContract }) => {
+  const [likes, setLikes] = useState(null)
+  const [liked, setLiked] = useState(false)
   const reportATweet = async () => {
     try {
       const contract = await connectWithTwitterContract();
@@ -41,7 +83,22 @@ const Card = ({ tweet, connectWithTwitterContract }) => {
       });
     }
   };
-  console.log(parseInt(tweet.timestamp));
+  const getLikes = () => {
+    axios.get('http://44f1-125-99-120-242.ngrok.io/like_tweet/'+parseInt(tweet.uid._hex)+'/').then((res)=>{
+      console.log(res.data);
+      setLikes(res.data.like_count)
+    })
+  }
+  const likeATweet = () => {
+    axios.post('http://44f1-125-99-120-242.ngrok.io/like_tweet/'+parseInt(tweet.uid._hex)+'/').then((res)=>{
+      console.log(res.data);
+      getLikes()
+      setLiked(!liked)
+    })
+  }
+  useEffect(() => {
+    getLikes()
+  }, [tweet])
   return (
     <div
       className="bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2 mt-8"
@@ -67,9 +124,9 @@ const Card = ({ tweet, connectWithTwitterContract }) => {
           </div>
           <button
             onClick={() => reportATweet()}
-            className="p-2 rounded-full hover:bg-red-200"
+            className="p-2 rounded-full hover:bg-red-500/25 hover:text-red-500"
           >
-            <RiFlag2Line className="text-2xl text-red-700" />
+            <RiFlag2Line className="text-2xl" />
           </button>
         </div>
         <h1 className="text-gray-400">{tweet.tweet_msg}</h1>
@@ -77,25 +134,54 @@ const Card = ({ tweet, connectWithTwitterContract }) => {
         tweet.image_url.endsWith(".jpg") ||
         tweet.image_url.endsWith(".jpeg") ||
         tweet.image_url.endsWith(".gif") ? (
-          <img className="rounded-xl my-2" src={tweet.image_url} />
+          <img className="rounded-xl my-4" src={tweet.image_url} />
         ) : tweet.image_url.endsWith(".mp4") ||
           tweet.image_url.endsWith(".mov") ||
           tweet.image_url.endsWith(".avi") ||
           tweet.image_url.endsWith(".mkv") ? (
-          <video controls>
+          <video className="rounded-xl my-4" controls>
             <source
               src={tweet.image_url}
-              type={`video/` + tweet.image_url.split(".")[-1]}
+              type={
+                `video/` +
+                tweet.image_url.split(".")[
+                  tweet.image_url.split(".").length - 1
+                ]
+              }
             />
           </video>
         ) : (
-          <audio controls>
+          <audio className="rounded-xl my-4" controls>
             <source
               src={tweet.image_url}
-              type={`audio/` + tweet.image_url.split(".")[-1]}
+              type={
+                `audio/` +
+                tweet.image_url.split(".")[
+                  tweet.image_url.split(".").length - 1
+                ]
+              }
             />
           </audio>
         )}
+        <div className="flex justify-evenly mt-4">
+          <RiChat1Line className="text-4xl rounded-full p-2 hover:bg-sky-500/25 hover:text-sky-500" />
+          <RiRepeatLine className="text-4xl rounded-full p-2 hover:bg-green-500/25 hover:text-green-500" />
+          <div className="flex items-center gap-1">
+            {liked ? (
+              <RiHeartFill
+                onClick={() => likeATweet()}
+                className="text-4xl rounded-full p-2 hover:bg-red-500/25 text-red-500"
+              />
+            ) : (
+              <RiHeartLine
+                onClick={() => likeATweet()}
+                className="text-4xl rounded-full p-2 hover:bg-red-500/25 hover:text-red-500"
+              />
+            )}
+            {likes && <h1 className="text-red-400">{likes}</h1>}
+          </div>
+          <RiShareForwardBoxFill className="text-4xl rounded-full p-2 hover:bg-sky-500/25 hover:text-sky-500" />
+        </div>
       </div>
     </div>
   );
@@ -107,8 +193,13 @@ const Tweets = () => {
     apiKey: "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",
   });
   const openai = new OpenAIApi(config);
-  const { createAUser, name, connectWithTwitterContract } =
-    useContext(FileAppContext);
+  const {
+    createAUser,
+    name,
+    connectWithTwitterContract,
+    userList,
+    addFriends,
+  } = useContext(FileAppContext);
   const [username, setUserName] = useState("");
   const [tweetText, setTweetText] = useState("");
   const [file, setFile] = useState(null);
@@ -120,7 +211,7 @@ const Tweets = () => {
     const tweets = await contract.getTweets();
     const owner = await contract.owner();
     console.log(owner);
-    setTweets(tweets);
+    setTweets([...tweets].reverse());
     console.log(tweets);
   };
   const listenToTweet = async () => {
@@ -215,6 +306,7 @@ const Tweets = () => {
                 name: file.name,
               });
               const url = `https://ipfs.io/ipfs/${cid}/${file.name}`;
+              console.log(url);
               const contract = await connectWithTwitterContract();
               const response = await contract.addTweet(url, tweetText, name);
               console.log(response);
@@ -318,7 +410,7 @@ const Tweets = () => {
   }, [file]);
 
   return (
-    <div className="min-h-[100vh]">
+    <div className="min-h-[100vh] relative">
       <ToastContainer />
       <Modal
         isOpen={modalIsOpen}
@@ -419,7 +511,7 @@ const Tweets = () => {
           <div className="flex">
             <Sidebar />
             <ToastContainer />
-            <div className="p-8 bg-gray-800 w-[60%] rounded-xl">
+            <div className="p-8 bg-gray-800 w-[55%] rounded-xl">
               <div className="flex justify-between">
                 <h1 className="text-5xl font-bold">Home</h1>
                 <button
@@ -444,9 +536,66 @@ const Tweets = () => {
                 )}
               </div>
             </div>
+            <div className="w-[25vw] py-4 px-8">
+              {userList.length > 0 ? (
+                <div>
+                  <h1 className="text-2xl font-bold">Who to follow</h1>
+                  {userList.slice(0, 2).map((user) => (
+                    <div className="flex items-center mt-6">
+                      <img
+                        className="w-12"
+                        src={generator.generateRandomAvatar()}
+                      />
+                      <h1 className="text-lg font-semibold ml-4">
+                        {user.name}
+                      </h1>
+                      <button
+                        className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap ml-auto"
+                        onClick={() =>
+                          addFriends({
+                            name: user.name,
+                            accountAddress: user.accountAddress,
+                          })
+                        }
+                      >
+                        Follow
+                      </button>
+                    </div>
+                  ))}
+                  <h1 className="text-center mt-4">
+                    <Link className="text-sky-500" to="/users">
+                      Show more
+                    </Link>
+                  </h1>
+                </div>
+              ) : null}
+              <h1 className="text-2xl font-bold mt-6">What's happening</h1>
+              <div className="flex mt-4">
+                <div>
+                  <h1 className="text-xs font-thin">Trending</h1>
+                  <h1 className="font-semibold">#SPITHackathon</h1>
+                  <h1 className="text-xs font-thin">1462 tweets</h1>
+                </div>
+              </div>
+              <div className="flex mt-4">
+                <div>
+                  <h1 className="text-xs font-thin">Trending</h1>
+                  <h1 className="font-semibold">#Blockchain</h1>
+                  <h1 className="text-xs font-thin">2355 tweets</h1>
+                </div>
+              </div>
+              <div className="flex mt-4">
+                <div>
+                  <h1 className="text-xs font-thin">Trending</h1>
+                  <h1 className="font-semibold">#EnemiesOfSyntax</h1>
+                  <h1 className="text-xs font-thin">1531 tweets</h1>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
+      <ScrollButton />
     </div>
   );
 };

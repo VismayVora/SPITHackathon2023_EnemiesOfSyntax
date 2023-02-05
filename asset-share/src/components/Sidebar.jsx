@@ -15,7 +15,7 @@ import {
 import { MdOutlineReport } from "react-icons/md";
 
 const Sidebar = () => {
-  const { connectWithTwitterContract, account } = useContext(FileAppContext);
+  const { connectWithTwitterContract, account, setAccount } = useContext(FileAppContext);
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     isOwner();
@@ -124,7 +124,8 @@ const Sidebar = () => {
         <RiLogoutBoxLine className="text-3xl text-red-500" />
         <h1
           onClick={() => {
-            navigate("/news");
+            setAccount(null);
+            navigate('/')
           }}
           className="text-xl text-red-500"
         >

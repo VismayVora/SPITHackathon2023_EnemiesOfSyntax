@@ -256,6 +256,7 @@ export const FileAppProvider = ({ children }) => {
         fetchTweets,
         tweets,
         connectWithTwitterContract,
+        setAccount,
       }}
     >
       {children}
