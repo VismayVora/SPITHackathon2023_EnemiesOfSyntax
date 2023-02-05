@@ -5,7 +5,7 @@ import CustomDrawer from '../components/CustomDrawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import VideoCall from '../components/App/VideoCall';
 import Account from '../components/Profile/Account';
-import { Mentees, Mentors, WelcomePage } from '../pages';
+import { Mentees, Mentors, Vote, WelcomePage } from '../pages';
 import Careertv from '../pages/Careertv';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -49,6 +49,8 @@ import { CartProvider } from '../../CartContext';
 import Track from '../pages/TrackPlayer';
 import TrackList from '../pages/TrackList';
 import AllEvents from '../pages/AllEvents';
+import { Notifications } from '../twitter/notifications';
+import WrappedApp from '../twitter/containers/main/profile/profileScreen';
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -66,21 +68,21 @@ const MenteesStack = createNativeStackNavigator();
 //   console.log(`got command event ${JSON.stringify(data)}`);
 // });
 
-const Jobs = () => {
+const Voter = () => {
   return (
     <MentorStack.Navigator screenOptions={{ headerShown: false }}>
       <MentorStack.Screen
-        name="Mentors"
-        component={Mentors}
+        name="Vote"
+        component={Vote}
         screenOptions={{ headerShown: false }}
       />
-      <MentorStack.Screen
-        name="MentorMenteesDetail"
-        component={MentorMenteesDetail}
+
+{/* <MentorStack.Screen
+        name="Poll"
+        component={Poll}
         screenOptions={{ headerShown: false }}
-      />
-      <MentorStack.Screen name="ChatScreen" component={ChatMain} />
-      <MentorStack.Screen name="StartupDetails" component={StartupDetails} />
+      /> */}
+
     </MentorStack.Navigator>
   );
 };
@@ -139,12 +141,12 @@ function Tabs() {
           if (route.name === 'Home') {
             return <Entypo name="home" size={27} color={color} />;
           }
-          if (route.name === 'Jobs') {
+          if (route.name === 'Voting') {
             return <FontAwesome5 name="connectdevelop" size={27} color={color} />;
           }
-          if (route.name === 'ChatBot') {
+          if (route.name === 'Notifications') {
             return (
-              <FontAwesome5 name="rocketchat" size={27} color={color} />
+              <FontAwesome5 name="bell" size={27} color={color} />
             );
           }
           if (route.name === 'Posts') {
@@ -165,8 +167,8 @@ function Tabs() {
         tabBarInactiveTintColor: theme.colors.greyDark,
       })}>
       <Tab.Screen
-        name="Jobs"
-        component={Jobs}
+        name="Voting"
+        component={Voter}
         options={{
           headerShown: false,
           headerStyle: {
@@ -202,8 +204,8 @@ function Tabs() {
 
 
       <Tab.Screen
-        name="ChatBot"
-        component={ChatBot}
+        name="Notifications"
+        component={Notifications}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
@@ -232,6 +234,8 @@ const HomeStackScreen = () => {
     </HomeStack.Navigator>
   );
 };
+
+
 const ResumeStackScreen = () => {
   return (
     <ResumeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -333,37 +337,19 @@ const AppStack = () => {
         />
         <Drawer.Screen
           name="Profile"
-          component={Account}
+          component={ProfileScreen}
           options={{
             drawerIcon: ({ color }) => (
               <Ionicons name="person-outline" size={22} color={color} />
             ),
           }}
         />
-        {/* <Drawer.Screen
-          name="TextToSpeech"
-          component={TextToSpeech}
-          options={{
-            drawerIcon: ({ color }) => (
-              <Ionicons name="person-outline" size={22} color={color} />
-            ),
-          }}
-        /> */}
         <Drawer.Screen
           name="VideoCall"
           component={VideoCall}
           options={{
             drawerIcon: ({ color }) => (
               <Ionicons name="md-videocam" size={22} color={color} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="Maps"
-          component={Location}
-          options={{
-            drawerIcon: ({ color }) => (
-              <Ionicons name="location" size={22} color={color} />
             ),
           }}
         />
@@ -387,16 +373,6 @@ const AppStack = () => {
             ),
           }}
         />
-        {/* <Drawer.Screen
-          name="Search Startups"
-          component={SearchJobs}
-          options={{
-            headerShown: false,
-            drawerIcon: ({ color }) => (
-              <Ionicons name="search" size={22} color={color} />
-            ),
-          }}
-        /> */}
         <Drawer.Screen
           name="Blog"
           component={Blog}
@@ -411,17 +387,7 @@ const AppStack = () => {
             ),
           }}
         />
-        {/* <Drawer.Screen
-          name="Events"
-          component={HomeStackScreen}
-          options={{
-            headerShown: false,
-            drawerIcon: ({ color }) => (
-              <MaterialIcons name="emoji-events" size={22} color={color} />
-            ),
-          }}
-        /> */}
-        {/* <Drawer.Screen
+        <Drawer.Screen
           name="ReferralClub"
           component={ReferralClub}
           options={{
@@ -430,7 +396,7 @@ const AppStack = () => {
               <EvilIcons name="pointer" size={22} color={color} />
             ),
           }}
-        /> */}
+        />
       </Drawer.Navigator>
       {/* <AlanView
         projectid={

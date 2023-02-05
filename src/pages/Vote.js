@@ -103,10 +103,8 @@ const JobListing = ({ title, company, description, logo }) => (
       <Text style={styles.jobDescription}>{description}</Text>
     </View>
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.applyButton} onPress={
-        filePicker
-      }>
-        <Text style={styles.applyButtonText}>Apply Now</Text>
+      <TouchableOpacity style={styles.applyButton} onPress={() => navigation.navigate('Poll')}>
+        <Text style={styles.applyButtonText}>Vote Now</Text>
       </TouchableOpacity>
     </View>
   </View>
@@ -146,7 +144,7 @@ const sendEmail = () => {
   });
 };
 
-const Mentors = () => {
+const Vote = () => {
 
 
 
@@ -225,7 +223,7 @@ const Mentors = () => {
       console.log('Shake!');
     })
     Tts.getInitStatus().then(() => {
-      Tts.speak('Here are some of the jobs of your interest!!');
+      Tts.speak('Vote if you find the content sensitive!!');
     });
 
     // return () => {
@@ -238,7 +236,7 @@ const Mentors = () => {
 
   return (
     <View style={{ flex: 1 ,backgroundColor:'white'}}>
-      <Text style={{ color: "#2eb6b8", fontSize: 25, marginLeft: 20, marginBottom: 20, marginTop: 10 ,alignContent:'center',alignSelf:'center'}}>Recommended jobs!</Text>
+      <Text style={{ color: "#2eb6b8", fontSize: 25, marginLeft: 20, marginBottom: 20, marginTop: 10 ,alignContent:'center',alignSelf:'center'}}>Voting!</Text>
 
       <FlatList
         data={jobs}
@@ -322,4 +320,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { Mentors };
+export { Vote };

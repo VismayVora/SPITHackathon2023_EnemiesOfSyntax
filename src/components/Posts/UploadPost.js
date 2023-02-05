@@ -105,8 +105,7 @@ const UploadPost = () => {
               color: 'black',
               marginBottom: 10,
             }}>
-            Report public spaces which are
-            not under PWD already, to authorities.
+            Upload Content
           </Text>
           <View
             style={{

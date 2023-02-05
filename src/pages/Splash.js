@@ -44,7 +44,7 @@ export default class Splash extends Component {
             </Animated.Image>
             <Animated.Text style={{...styles.title, 
                                 marginTop:this.state.titleMarginTop}}>
-                AccessAbility
+                Dwitter
             </Animated.Text>
         </View>
     }

@@ -1,45 +1,45 @@
 const PRODUCTS = [
     {
         id: 100,
-        name: 'Lady',
-        price: 51399,
-        image: require('../assets/photo1.png'),
-        description: 'This exquisite & original artwork is handmade by a disabled artist from Bengaluru. He has a Locomotor Disability. He is a filmmaker and art teacher. He lives with a cluster of dreams and hopes to turn them into reality..'
+        name: 'NUDITY DETECTION',
+        price: 'Detect raw and explicit nudity in images and videos',
+        image: {uri:'https://sightengine.com/assets/img/examples/example-fac-1000.jpg'},
+        description: 'Detect raw and explicit nudity in images and videos.'
     },
     {
         id: 101,
-        name: 'Black Paint in Vase',
+        name: 'Offensive Content Detection',
         price: 8699,
-        image: require('../assets/photo2.png'),
-        description: 'The artist uses beautiful strokes of different colours to bring the elegant and unique black plant alive on canvas..'
+        image: {uri:'https://sightengine.com/assets/img/doc/offensive/offensive3.jpg'},
+        description: 'The offensive model is useful to determine if an image or a video contains offensive content or hate content.'
     },
     {
         id: 102,
-        name: 'Motherhood',
+        name: 'Weapon Alcohol Drug Detection',
         price: 2999,
-        image: require('../assets/photo3.png'),
-        description: 'Even for a powerful creature such as this beautiful lioness, it is never simple raising young cubs. This painting tells us the struggles of motherhood and love of a mother for his child through beautiful work of art.'
+        image: {uri:'https://sightengine.com/assets/img/doc/wad/weapon/weapon3.jpg'},
+        description: 'The Weapon Alcohol Drug detection model helps you determine if an image or video contains displays of weapons, alcoholic beverages, recreational drugs or medical drugs.'
     },
     {
         id: 103,
-        name: 'Lost In Music',
+        name: 'Graphic Violence & Gore Detection',
         price: 1050,
-        image: require('../assets/photo4.png'),
+        image: {uri:'https://sightengine.com/assets/img/examples/example-tt-1000.jpg'},
         description: 'We reveal something of our nature when we sing, something that can be disguised in our speaking voice..'
     },
     {
         id: 104,
-        name: 'Magical Night',
+        name: 'Text Moderation in Images/Videos',
         price: 2999,
-        image: require('../assets/photo5.png'),
-        description: 'Through a beautiful portrayal of firecrackers lighting up the night sky, the artist wants to capture the essence of joy, festivities, and togetherness.'
+        image: {uri:'https://sightengine.com/assets/img/examples/example-text-ocr-1.jpg'},
+        description: 'The Visual Text Moderation API is useful to determine if an image or video contains unwanted text such as profanity or personally identifiable information.'
     },
     {
         id: 105,
-        name: 'Beauty and Devotion',
+        name: 'Scammer Detection',
         price: 2399,
-        image: require('../assets/photo6.png'),
-        description: 'Add vitality to your decor with this highly stylized, elaborate portrayal of Diya.'
+        image: {uri:'https://sightengine.com/assets/img/doc/scammers/scammer1.jpg'},
+        description: 'The Scammer Detection Model is useful to help detect and block common frauds on social networks and dating sites. The so-called scammers are romance scammers, military scammers or other types of scammers that trick people into sending them money.'
     }
 ];
 

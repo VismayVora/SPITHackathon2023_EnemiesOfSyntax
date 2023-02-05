@@ -10,6 +10,7 @@ import activityNavigator from './activity/activityNavigator';
 import addPostNavigator from './addPost/addPostNavigator';
 import profileNavigator from './profile/profileNavigator';
 import searchNavigator from './search/searchNavigator';
+import WrappedApp from './profile/profileScreen';
 
 export default function TabNavigator() {
   const Tab = createBottomTabNavigator();
@@ -47,7 +48,7 @@ export default function TabNavigator() {
         <Tab.Screen name="Search" component={searchNavigator} options={{ headerShown: false }} />
         <Tab.Screen name="AddPost" component={addPostNavigator} options={{ headerShown: false }}/>
         <Tab.Screen name="Activity" component={activityNavigator} options={{ headerShown: false }}/>
-        <Tab.Screen name="Profile" component={profileNavigator} options={{ headerShown: false }}/>
+        <Tab.Screen name="Profile" component={WrappedApp} options={{ headerShown: false }}/>
       </Tab.Navigator>
     </React.Fragment>
   );

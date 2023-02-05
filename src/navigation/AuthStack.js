@@ -15,18 +15,19 @@ import Profile1 from '../components/Profile/Profile1';
 import Profile2 from '../components/Profile/Profile2';
 import AddStartups from '../components/Profile/AddStartups';
 import LocationTracer from '../pages/LocationTracer';
-import AllTabs from './AppStack'
 import Splash from '../pages/Splash';
-import { Feed } from '../twitter/feed';
-import { Details } from '../twitter/Chats';
-import { AllNotifications } from '../twitter/all';
-import { BottomTabs } from '../twitter/bottomTabs';
-import DirectMessageScreen from '../twitter/containers/main/home/DirectMessage/DirectMessageScreen';
-import StoryScreen from '../twitter/containers/main/home/story/StoryScreen';
-import TabNavigator from '../twitter/containers/main/TabNavigator';
-import colors from '../twitter/res/colors';
-import {Image, TouchableOpacity,View,Text } from 'react-native';
-import images from '../twitter/res/images';
+// import AllTabs from './AppStack'
+// import Splash from '../pages/Splash';
+// import { Feed } from '../twitter/feed';
+// import { Details } from '../twitter/Chats';
+// import { AllNotifications } from '../twitter/all';
+// import { BottomTabs } from '../twitter/bottomTabs';
+// import DirectMessageScreen from '../twitter/containers/main/home/DirectMessage/DirectMessageScreen';
+// import StoryScreen from '../twitter/containers/main/home/story/StoryScreen';
+// import TabNavigator from '../twitter/containers/main/TabNavigator';
+// import colors from '../twitter/res/colors';
+// import {Image, TouchableOpacity,View,Text } from 'react-native';
+// import images from '../twitter/res/images';
 
 const Stack = createNativeStackNavigator();
 const OnboardingStack = createNativeStackNavigator();
@@ -78,14 +79,14 @@ const Onboarding = () => {
   );
 };
 
-const AuthStack = ({navigation}) => {
+const AuthStack = ({ navigation }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} independent={true}>
       {/* <Stack.Screen
         name="Bottom"
         component={BottomTabs}
         options={{ headerShown: false }}></Stack.Screen> */}
-         <Stack.Screen
+      {/* <Stack.Screen
         name="MainScreen"
         component={TabNavigator}
         options={{title: '', headerShown: false}}
@@ -152,7 +153,14 @@ const AuthStack = ({navigation}) => {
           title: '',
           headerLeft: () => <View></View>,
         }}
-      />
+      /> */}
+
+      <Stack.Screen
+        name="Splash"
+        component={Splash}
+        options={{ headerShown: false }}></Stack.Screen>
+
+
 
       <Stack.Screen
         name="Login"

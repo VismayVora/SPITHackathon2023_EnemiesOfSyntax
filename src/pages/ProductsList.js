@@ -94,12 +94,7 @@ export function ProductsList ({navigation}) {
   
   return (
     <View style={{flex:1}}>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("VideoCall")
-        }>
-        <Text style={styles.text1Style}>Arts by our Artisians</Text>
-      </TouchableOpacity>
+        <Text style={styles.text1Style}>What is sensitive content?</Text>
       <View style={{flex:1}}>
 
     <FlatList 
