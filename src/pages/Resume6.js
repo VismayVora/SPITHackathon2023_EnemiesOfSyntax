@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     button2: {
         width: width * 0.35,
         alignSelf: 'center',
-        backgroundColor: '#2eb6b8',
+        backgroundColor: '#0ea5e9',
         flexDirection: 'row',
         margin: 10,
         alignContent: 'center',
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     label1: {
-        color: '#2eb6b8',
+        color: '#0ea5e9',
         fontWeight: '100',
         fontSize: 12,
 

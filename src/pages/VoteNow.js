@@ -14,7 +14,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Charts from './Charts';
 
 
-const SearchJobs = ({ navigation }) => {
+const VoteNow = ({ navigation }) => {
 
     const { colors } = useTheme();
 
@@ -23,7 +23,7 @@ const SearchJobs = ({ navigation }) => {
             <ScrollView>
                 {/* <Header title={'Search Jobs'} /> */}
                 <View style={styles.view2}>
-                    <Text style={styles.title}>Search Startups</Text>
+                    <Text style={styles.title}>Voting trends</Text>
                     <TextInput placeholderTextColor={colors.placeholder2}
                         style={{
                             ...styles.nameInput,
@@ -42,7 +42,7 @@ const SearchJobs = ({ navigation }) => {
                     </TextInput>
                 </View>
                 <View style={styles.view}>
-                    <Text style={styles.text}>Top startups</Text>
+                    <Text style={styles.text}>Most Sensitive Content</Text>
                     <Text style={styles.text2}>View all</Text>
                 </View>
                 <CompanyJobs />
@@ -52,7 +52,7 @@ const SearchJobs = ({ navigation }) => {
     );
 }
 
-export default SearchJobs;
+export default VoteNow;
 
 const styles = StyleSheet.create({
     container: {

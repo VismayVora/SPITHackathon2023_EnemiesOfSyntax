@@ -45,7 +45,7 @@ const Router = () => {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      primary: '#2eb6b8',
+      primary: '#0ea5e9',
       secondary: '#814ED2',
       accent: '#F5B400',
       disabled: '#FF7CC3',

@@ -67,7 +67,7 @@ const ChatBot = () => {
           onChangeText={val => setMsg(val)}
         />
         <TouchableOpacity
-          style={[styles.sendBtn, {backgroundColor: '#2eb6b8'}]}
+          style={[styles.sendBtn, {backgroundColor: '#0ea5e9'}]}
           disabled={msg ? false : true}
           onPress={() => onSendMsg()}>
             <Ionicons name="send" size={30} color="white" style={{paddingTop:5}} />

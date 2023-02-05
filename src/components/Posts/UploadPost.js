@@ -165,7 +165,7 @@ const UploadPost = () => {
               <TouchableOpacity
                 style={{
                   padding: 10,
-                  backgroundColor: '#2eb6b8',
+                  backgroundColor: '#0ea5e9',
                   borderRadius: 100,
                   alignSelf: 'baseline',
                 }}
@@ -183,7 +183,7 @@ const UploadPost = () => {
             <TouchableOpacity
               style={{
                 padding: 12,
-                backgroundColor: '#2eb6b8',
+                backgroundColor: '#0ea5e9',
                 borderRadius: 10,
               }}
               onPress={post}>

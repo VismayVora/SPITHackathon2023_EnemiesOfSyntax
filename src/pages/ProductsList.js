@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   footer: {
     width: wp('100%'),
     height: hp('7%'),
-    backgroundColor: '#2eb6b8',
+    backgroundColor: '#0ea5e9',
     marginTop: hp('0.01%'),
     justifyContent: 'center',
     alignItems: 'center'
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   text1Style: {
     margin: 15,
     fontSize: 25,
-    color: '#2eb6b8',
+    color: '#0ea5e9',
     fontWeight: 'bold',
     alignContent: 'center',
     justifyContent: 'center',

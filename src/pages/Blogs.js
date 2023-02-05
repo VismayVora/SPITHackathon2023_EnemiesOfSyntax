@@ -189,7 +189,7 @@ const Blogs = props => {
               paddingHorizontal: 30,
               paddingVertical: 15,
             }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: -5,color:'#2eb6b8'}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: -5,color:'#0ea5e9'}}>
               Popular Stories <Text style={styles.verticalLine}>|</Text>
             </Text>
           </View>
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    color: '#2eb6b8',
+    color: '#0ea5e9',
   },
   track: {
     width: 150,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   YourDailyReadText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#2eb6b8',
+    color: '#0ea5e9',
     textTransform: 'uppercase',
   },
   profilePicStyle: {
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
   },
   verticalLine: {
     fontWeight: 'bold',
-    color: "#2eb6b8",
+    color: "#0ea5e9",
     fontSize: 30,
     textShadowRadius: 4,
     textShadowColor: 'grey',

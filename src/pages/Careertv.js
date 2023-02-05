@@ -22,7 +22,7 @@ const Careertv = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <LinearGradient
-        colors={[colors.primary, '#2eb6b8']}
+        colors={[colors.primary, '#0ea5e9']}
         style={{width: '100%', height: 200}}>
         <Text
           style={{

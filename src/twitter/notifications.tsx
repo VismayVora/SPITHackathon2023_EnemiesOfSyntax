@@ -40,8 +40,8 @@ export const Notifications = () => {
     <TabBar
       {...props}
       indicatorStyle={{ backgroundColor: theme.colors.primary }}
-      style={{ backgroundColor: tabBarColor, shadowColor: theme.colors.text }}
-      labelStyle={{ color: theme.colors.primary }}
+      style={{ backgroundColor: tabBarColor, shadowColor: '#0ea5e9' }}
+      labelStyle={{ color: '#0ea5e9' }}
       pressColor={rippleColor}
     />
   );

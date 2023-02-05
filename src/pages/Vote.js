@@ -92,7 +92,7 @@ const filePicker = () => {
 
 
 
-const JobListing = ({ title, company, description, logo }) => (
+const JobListing = ({ title, company, description, logo ,navigation}) => (
   <View style={styles.jobContainer}>
     <View style={styles.logoContainer}>
       <Image source={{ uri: logo }} style={styles.logo} />
@@ -103,7 +103,7 @@ const JobListing = ({ title, company, description, logo }) => (
       <Text style={styles.jobDescription}>{description}</Text>
     </View>
     <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.applyButton} onPress={() => navigation.navigate('Poll')}>
+      <TouchableOpacity style={styles.applyButton} onPress={() => navigation.navigate('VoteNow')}>
         <Text style={styles.applyButtonText}>Vote Now</Text>
       </TouchableOpacity>
     </View>
@@ -144,7 +144,7 @@ const sendEmail = () => {
   });
 };
 
-const Vote = () => {
+const Vote = ({}) => {
 
 
 
@@ -236,7 +236,7 @@ const Vote = () => {
 
   return (
     <View style={{ flex: 1 ,backgroundColor:'white'}}>
-      <Text style={{ color: "#2eb6b8", fontSize: 25, marginLeft: 20, marginBottom: 20, marginTop: 10 ,alignContent:'center',alignSelf:'center'}}>Voting!</Text>
+      <Text style={{ color: "#0ea5e9", fontSize: 25, marginLeft: 20, marginBottom: 20, marginTop: 10 ,alignContent:'center',alignSelf:'center'}}>Voting!</Text>
 
       <FlatList
         data={jobs}
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   applyButton: {
-    backgroundColor: '#2eb6b8',
+    backgroundColor: '#0ea5e9',
     padding: 10,
     borderRadius: 5,
   },
@@ -313,7 +313,7 @@ const styles = StyleSheet.create({
   footer: {
     width: wp('100%'),
     height: hp('7%'),
-    backgroundColor: '#2eb6b8',
+    backgroundColor: '#0ea5e9',
     marginTop: hp('0.01%'),
     justifyContent: 'center',
     alignItems: 'center'

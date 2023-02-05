@@ -6,14 +6,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import VideoCall from '../components/App/VideoCall';
 import Account from '../components/Profile/Account';
 import { Mentees, Mentors, Vote, WelcomePage } from '../pages';
-import Careertv from '../pages/Careertv';
+// import Careertv from '../pages/Careertv';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import theme from '../theme';
-import SearchJobs from '../pages/SearchJobs';
+import VoteNow from '../pages/VoteNow';
 import Blogs from '../pages/Blogs';
 import OpenBlogScreen from '../pages/OpenBlogScreen';
 import HomeScreen from '../pages/HomeScreen';
@@ -51,6 +51,7 @@ import TrackList from '../pages/TrackList';
 import AllEvents from '../pages/AllEvents';
 import { Notifications } from '../twitter/notifications';
 import WrappedApp from '../twitter/containers/main/profile/profileScreen';
+import { Status } from '../pages/Status';
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const HomeStack = createNativeStackNavigator();
@@ -77,11 +78,11 @@ const Voter = () => {
         screenOptions={{ headerShown: false }}
       />
 
-{/* <MentorStack.Screen
-        name="Poll"
-        component={Poll}
+      <MentorStack.Screen
+        name="VoteNow"
+        component={VoteNow}
         screenOptions={{ headerShown: false }}
-      /> */}
+      />
 
     </MentorStack.Navigator>
   );
@@ -306,7 +307,7 @@ const AppStack = () => {
         drawerContent={props => <CustomDrawer {...props} />}
         screenOptions={{
           headerShown: false,
-          drawerActiveBackgroundColor: '#2eb6b8',
+          drawerActiveBackgroundColor: '#0ea5e9',
           drawerActiveTintColor: '#fff',
           drawerInactiveTintColor: '#333',
           drawerLabelStyle: {
@@ -353,7 +354,7 @@ const AppStack = () => {
             ),
           }}
         />
-        <Drawer.Screen
+        {/* <Drawer.Screen
           name="Careertv"
           component={Careertv}
           options={{
@@ -362,10 +363,10 @@ const AppStack = () => {
               <Ionicons name="play-circle-outline" size={22} color={color} />
             ),
           }}
-        />
+        /> */}
         <Drawer.Screen
-          name="Resume Builder"
-          component={ResumeStackScreen}
+          name="Status"
+          component={Status}
           options={{
             headerShown: false,
             drawerIcon: ({ color }) => (

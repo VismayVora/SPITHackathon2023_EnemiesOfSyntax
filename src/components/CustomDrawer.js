@@ -54,7 +54,7 @@ const CustomDrawer = props => {
     <View style={{flex: 1}}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#2eb6b8'}}>
+        contentContainerStyle={{backgroundColor: '#0ea5e9'}}>
         <ImageBackground
           source={require('./Dishant.jpeg')}
           style={{padding: 20}}>
@@ -93,7 +93,7 @@ const CustomDrawer = props => {
           <TouchableOpacity
             style={{
               padding: 10,
-              backgroundColor:'#2eb6b8',
+              backgroundColor:'#0ea5e9',
               borderRadius: 20,
             }}
             onPress={() => {

@@ -1,7 +1,26 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {Text, Image, View, StyleSheet, TouchableOpacity} from 'react-native';
+import Tts from 'react-native-tts';
+import RNShake from 'react-native-shake';
 
 export function Product({name, description, image, onPress}) {
+
+  useEffect(() => {
+    const subscription = RNShake.addListener(() => {
+      // Your code here...
+      console.log('Shake!');
+    })
+    Tts.getInitStatus().then(() => {
+      Tts.speak('Here is the list of public image recognition and video recognition models that you we have implemented in our product.!!');
+    });
+
+    // return () => {
+    //   // Your code here...
+    //   // Tts.removeEventListener('tts-finish', (event) => {
+    //   //   console.log('finished', event);
+    //   // });
+    // }
+  }, []);
   return (
     <TouchableOpacity style={styles.card} onPress={onPress}>
       <Image

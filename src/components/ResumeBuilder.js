@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     footer: {
         width: wp('100%'),
         height: hp('7%'),
-        backgroundColor: '#2eb6b8',
+        backgroundColor: '#0ea5e9',
         marginTop: hp('2%'),
         justifyContent: 'center',
         alignItems: 'center'
