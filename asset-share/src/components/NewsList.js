@@ -2,12 +2,12 @@ import React from 'react';
 
 const NewsList = ({ title, img, link }) => {
   return (
-    <div className="flex news-list_container">
-      <div className="w-64 h-24 overflow-hidden image_container">
-        <img src={img} alt={title} className="object-contain" />
+    <div className="flex bg-gray-900 rounded-xl p-4 mt-4">
+      <div className="w-64 overflow-hidden">
+        <img src={img} alt={title} className="w-36" />
       </div>
-      <div className="font-sans	text-base news_title pl-3">
-        <a href={link}>
+      <div className="font-sans	text-base pl-3">
+        <a href={link} target="_blank" rel="noreferrer">
           <p className="">{title}</p>
         </a>
       </div>

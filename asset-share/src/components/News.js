@@ -7,7 +7,7 @@ const News = () => {
   const [loading, setLoading] = useState(true);
   const API_KEY = "b918a4a88b91461cbb5923734af9c509";
   const query = "Crypto";
-  const api_url = `https://newsapi.org/v2/everything?q=${query}&from=2022-12-15&sortBy=popularity&apiKey=${API_KEY}`;
+  const api_url = `https://newsapi.org/v2/everything?q=${query}&from=2023-02-05&sortBy=popularity&apiKey=${API_KEY}`;
   const [blogData, setBlogData] = useState([]);
   useEffect(() => {
     getBlogData();

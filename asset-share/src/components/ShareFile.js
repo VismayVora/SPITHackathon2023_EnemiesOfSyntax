@@ -5,6 +5,7 @@ import { Web3Storage } from "web3.storage";
 import { connectWithContract } from "../api";
 import Navbar from "./Navbar";
 import meditation from "../assets/meditation.png";
+import Sidebar from "./Sidebar";
 const ShareFile = () => {
   const [file, setFile] = useState([]);
 
@@ -103,126 +104,129 @@ const ShareFile = () => {
     setFile(files[0]);
   };
   return (
-    <div className="bg-[#10141A] h-screen">
+    <div className="bg-gray-900 h-screen">
       <Navbar />
-      {account.length > 0 ? (
-        <div className="flex flex-col">
-          <div className="flex items-center justify-around">
-            {!name ? (
-              <div className="flex">
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-                <button
-                  className="text-white font-semibold bg-[#556195] px-4 py-2"
-                  onClick={() => createAUser(username)}
-                >
-                  Create User
-                </button>
+      <div className="flex">
+        <Sidebar />
+        {account.length > 0 ? (
+          <div className="flex flex-col">
+            <div className="flex items-center justify-around">
+              {!name ? (
+                <div className="flex">
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUserName(e.target.value)}
+                  />
+                  <button
+                    className="text-white font-semibold bg-[#556195] px-4 py-2"
+                    onClick={() => createAUser(username)}
+                  >
+                    Create User
+                  </button>
+                </div>
+              ) : null}
+              <button
+                className="text-white font-semibold bg-[#556195] px-4 py-2"
+                onClick={() => getReceivedFiles()}
+              >
+                Get receivedFiles
+              </button>
+              <button
+                className="text-white font-semibold bg-[#556195] px-4 py-2"
+                onClick={() => getPublicKey()}
+              >
+                Get public key
+              </button>
+              <button
+                className="text-white font-semibold bg-[#556195] px-4 py-2"
+                onClick={() => getPrivateKey()}
+              >
+                Get private key
+              </button>
+            </div>
+            <div className="flex flex-col min-w-[50%] mt-16  self-center max-h-lg">
+              <input
+                type="text"
+                placeholder="Enter Name"
+                value={yourName}
+                onChange={(e) => setYourName(e.target.value)}
+                className="mt-8 bg-[#0D0B0B] p-2 text-white"
+              />
+              <textarea
+                placeholder="Enter description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="mt-8 bg-[#0D0B0B] p-2 text-white"
+              />
+              <input
+                type="text"
+                placeholder="Enter Wallet Address"
+                value={receiverAddress}
+                onChange={(e) => setReceiverAddress(e.target.value)}
+                className="mt-8 bg-[#0D0B0B] p-2 text-white"
+              />
+              <input
+                type="file"
+                onChange={(e) => retrieveFile(e)}
+                className="mt-8 bg-[#0D0B0B] p-2 text-white"
+              />
+
+              <button
+                onClick={() => {
+                  uploadFile2();
+                }}
+                className="self-end min-w-[100px] text-white font-semibold bg-[#556195] px-4 py-2 mt-8"
+              >
+                Send >
+              </button>
+            </div>
+            {receivedFiles.length > 0 ? (
+              <div className="p-4 bg-[#10141A]">
+                <h1 className="text-white text-2xl">Files</h1>
+                <div className="flex justify-around">
+                  <p className="text-white">Sender Name</p>
+                  <p className="text-white">Description</p>
+                  <p className="text-white">File Name</p>
+                </div>
+                {receivedFiles.map((file) => (
+                  <div className="flex justify-around">
+                    {/* <table>
+                      <thead>
+                        <tr>
+                          <th>Sender Name</th>
+                          <th>Description</th>
+                          <th>File</th>
+                        </tr>
+                      </thead>
+                    </table> */}
+                    <p className="text-slate-300">{file.senderName}</p>
+                    <p className="text-slate-300">{file.desc}</p>
+                    <a
+                      href={`https://ipfs.io/ipfs/${file.hash}/${file.name}`}
+                      key={file}
+                      className="text-slate-300"
+                      target="_blank"
+                    >
+                      {file.name}
+                    </a>
+                  </div>
+                ))}
               </div>
             ) : null}
+          </div>
+        ) : (
+          <div className=" mt-4 flex flex-col items-center justify-center">
+            <img src={meditation} />
             <button
-              className="text-white font-semibold bg-[#556195] px-4 py-2"
-              onClick={() => getReceivedFiles()}
+              className="text-white font-semibold bg-[#556195] px-4 py-2 mt-4"
+              onClick={() => connection()}
             >
-              Get receivedFiles
-            </button>
-            <button
-              className="text-white font-semibold bg-[#556195] px-4 py-2"
-              onClick={() => getPublicKey()}
-            >
-              Get public key
-            </button>
-            <button
-              className="text-white font-semibold bg-[#556195] px-4 py-2"
-              onClick={() => getPrivateKey()}
-            >
-              Get private key
+              Connect Account
             </button>
           </div>
-          <div className="flex flex-col min-w-[50%] mt-16  self-center max-h-lg">
-            <input
-              type="text"
-              placeholder="Enter Name"
-              value={yourName}
-              onChange={(e) => setYourName(e.target.value)}
-              className="mt-8 bg-[#0D0B0B] p-2 text-white"
-            />
-            <textarea
-              placeholder="Enter description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="mt-8 bg-[#0D0B0B] p-2 text-white"
-            />
-            <input
-              type="text"
-              placeholder="Enter Wallet Address"
-              value={receiverAddress}
-              onChange={(e) => setReceiverAddress(e.target.value)}
-              className="mt-8 bg-[#0D0B0B] p-2 text-white"
-            />
-            <input
-              type="file"
-              onChange={(e) => retrieveFile(e)}
-              className="mt-8 bg-[#0D0B0B] p-2 text-white"
-            />
-
-            <button
-              onClick={() => {
-                uploadFile2();
-              }}
-              className="self-end min-w-[100px] text-white font-semibold bg-[#556195] px-4 py-2 mt-8"
-            >
-              Send >
-            </button>
-          </div>
-          {receivedFiles.length > 0 ? (
-            <div className="p-4 bg-[#10141A]">
-              <h1 className="text-white text-2xl">Files</h1>
-              <div className="flex justify-around">
-                <p className="text-white">Sender Name</p>
-                <p className="text-white">Description</p>
-                <p className="text-white">File Name</p>
-              </div>
-              {receivedFiles.map((file) => (
-                <div className="flex justify-around">
-                  {/* <table>
-                    <thead>
-                      <tr>
-                        <th>Sender Name</th>
-                        <th>Description</th>
-                        <th>File</th>
-                      </tr>
-                    </thead>
-                  </table> */}
-                  <p className="text-slate-300">{file.senderName}</p>
-                  <p className="text-slate-300">{file.desc}</p>
-                  <a
-                    href={`https://ipfs.io/ipfs/${file.hash}/${file.name}`}
-                    key={file}
-                    className="text-slate-300"
-                    target="_blank"
-                  >
-                    {file.name}
-                  </a>
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      ) : (
-        <div className=" mt-4 flex flex-col items-center justify-center">
-          <img src={meditation} />
-          <button
-            className="text-white font-semibold bg-[#556195] px-4 py-2 mt-4"
-            onClick={() => connection()}
-          >
-            Connect Account
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

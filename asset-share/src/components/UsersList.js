@@ -32,7 +32,7 @@ const UsersList = () => {
                       accountAddress: user.accountAddress,
                     });
                   }}
-                  className="text-white font-semibold bg-[#556195] px-4 py-2 mt-2"
+                  className="bg-sky-500 px-4 py-2 rounded-xl focus:outline-none text-gray-100 mt-4"
                 >
                   Follow
                 </button>

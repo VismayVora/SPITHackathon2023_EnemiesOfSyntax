@@ -6,7 +6,7 @@ import { AvatarGenerator } from "random-avatar-generator";
 import Navbar from "./Navbar";
 const generator = new AvatarGenerator();
 const Card = ({ tweet, count, connectWithTwitterContract }) => {
-  const [days, setDays] = useState(0);
+  const [days, setDays] = useState(1);
   const putIntoVoting = async () => {
     const contract = await connectWithTwitterContract();
     try {
@@ -18,7 +18,7 @@ const Card = ({ tweet, count, connectWithTwitterContract }) => {
   };
   return (
     <div
-      className="mb-8 bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2"
+      className="mt-8 bg-gray-900 max-w-[50vw] px-8 py-6 rounded-xl flex items-start gap-2"
       key={tweet.tweet_msg}
     >
       <img className="w-12" src={generator.generateRandomAvatar()} />
@@ -36,7 +36,8 @@ const Card = ({ tweet, count, connectWithTwitterContract }) => {
           value={days}
           onChange={(e) => setDays(e.target.value)}
           placeholder="Number of days"
-          className="p-2 rounded mr-4"
+          className="bg-gray-800 px-4 py-2 rounded-xl focus:outline-none text-gray-400 mr-4"
+          min={1}
         />
         <button
           onClick={() => {
@@ -78,10 +79,11 @@ const Admin = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex min-h-screen">
+      <div className="flex min-h-screen bg-gray-900">
         <Sidebar />
         {tweets.length > 0 ? (
-          <div>
+          <div className="p-8 bg-gray-800 w-[60%] rounded-xl">
+            <h1 className="text-5xl font-bold text-gray-100">Reports</h1>
             {tweets.map((tweet, index) => {
               console.log(tweet);
               return (
