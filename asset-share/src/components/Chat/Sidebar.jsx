@@ -51,8 +51,8 @@ const Sidebar = ({ setUsername }) => {
           <IoChevronBack className="text-xl cursor-pointer" onClick={() => navigate(-1)} />
           <h1 className="text-3xl font-bold">Messages</h1>
         </div>
-        <div className="flex items-center w-full my-2 p-1 bg-gray-700 rounded-full">
-          <MdSearch className="text-xl text-gray-900 m-2" />
+        <div className="flex items-center w-full my-2 p-1 bg-gray-800 rounded-full">
+          <MdSearch className="text-xl text-inherit m-2" />
           <input
             placeholder="Search chat"
             className="focus:outline-none grow bg-inherit mr-2"
@@ -60,7 +60,7 @@ const Sidebar = ({ setUsername }) => {
           />
         </div>
       </div>
-      <div className="h-[609px] scroll-smooth scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-900 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+      <div className="h-[609px] scroll-smooth scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-900 overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
         {friendLists?.map((friend, index) => (
           <ChatTile key={index} friend={friend} setUsername={setUsername} />
         ))}

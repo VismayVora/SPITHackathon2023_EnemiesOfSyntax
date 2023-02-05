@@ -58,7 +58,7 @@ const Input = ({ input, setInput, open, setOpen, onEmojiClick }) => {
   }
   return (
     <form
-      className="w-full bg-gray-700 p-4"
+      className="w-full bg-gray-800 p-4"
       onSubmit={(e) => {
         e.preventDefault();
         sendMsg({ msg: input, address: currentUserAddress });
@@ -103,7 +103,7 @@ const Room = ({ username }) => {
     setInput((prevState) => prevState + emojiData.emoji);
   };
   return (
-    <div className="flex flex-col w-3/4 h-screen bg-gray-700 bg-center">
+    <div className="flex flex-col w-3/4 h-screen bg-gray-800 bg-center">
       <Header username={username} />
       <Chats />
       <Input

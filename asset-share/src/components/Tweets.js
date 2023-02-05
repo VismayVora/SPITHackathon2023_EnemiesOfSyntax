@@ -232,6 +232,8 @@ const Tweets = () => {
   const [tweets, setTweets] = useState([]);
   const [imgurl, setImgUrl] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadingAI, setLoadingAI] = useState(false);
   const fetchTweets = async () => {
     const contract = await connectWithTwitterContract();
     const tweets = await contract.getTweets();
@@ -252,6 +254,7 @@ const Tweets = () => {
   }, []);
 
   const generateImage = async () => {
+    setLoadingAI(true);
     const response = await openai.createImage({
       prompt: desc,
       n: 1,
@@ -260,9 +263,11 @@ const Tweets = () => {
     console.log(response.data.data[0].url);
     const url = response.data.data[0].url;
     setImgUrl(url);
+    setLoadingAI(false);
   };
 
   const tweetKaro = async () => {
+    setLoading(true);
     const responseText = await axios.post(
       "https://44f1-125-99-120-242.ngrok.io/detect_hate_text/",
       {
@@ -271,7 +276,7 @@ const Tweets = () => {
     );
     console.log(responseText.data);
     if (!responseText.data.hate) {
-      if (file.type.startsWith("image/")) {
+      if (file?.type.startsWith("image/")) {
         console.log("image");
         const web3 = new Web3Storage({
           token:
@@ -295,6 +300,7 @@ const Tweets = () => {
               const contract = await connectWithTwitterContract();
               const response = await contract.addTweet(url, tweetText, name);
               console.log(response);
+              setLoading(false);
             } else {
               console.log(res.data);
               toast.error(res.data["Sensitive Image Detected"], {
@@ -307,9 +313,10 @@ const Tweets = () => {
                 progress: undefined,
                 theme: "light",
               });
+              setLoading(false);
             }
           });
-      } else if (file.type.startsWith("video/")) {
+      } else if (file?.type.startsWith("video/")) {
         console.log("video");
         var formdata = new FormData();
         formdata.append("file", file, file.name);
@@ -336,6 +343,7 @@ const Tweets = () => {
               const contract = await connectWithTwitterContract();
               const response = await contract.addTweet(url, tweetText, name);
               console.log(response);
+              setLoading(false);
             } else {
               console.log(res.data);
               toast.error(res.data["Sensitive Image Detected"], {
@@ -348,9 +356,10 @@ const Tweets = () => {
                 progress: undefined,
                 theme: "light",
               });
+              setLoading(false);
             }
           });
-      } else if (file.type.startsWith("audio/")) {
+      } else if (file?.type.startsWith("audio/")) {
         console.log("audio");
         var formdata = new FormData();
         formdata.append("file", file, file.name);
@@ -376,6 +385,7 @@ const Tweets = () => {
               const contract = await connectWithTwitterContract();
               const response = await contract.addTweet(url, tweetText, name);
               console.log(response);
+              setLoading(false);
             } else {
               console.log(res.data);
               toast.error(res.data["Hate Speech Detected"], {
@@ -388,9 +398,23 @@ const Tweets = () => {
                 progress: undefined,
                 theme: "light",
               });
+              setLoading(false);
             }
           });
+      } else if(file) {
+        toast.error("File type not supported", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setLoading(false);
       }
+      setLoading(false);
     } else {
       console.log(responseText.data);
       toast.error("Use appropriate language", {
@@ -403,6 +427,7 @@ const Tweets = () => {
         progress: undefined,
         theme: "light",
       });
+      setLoading(false);
     }
   };
   const tweetAI = async () => {
@@ -442,33 +467,36 @@ const Tweets = () => {
         isOpen={modalIsOpen}
         onRequestClose={() => setIsOpen(false)}
         contentLabel="Example Modal"
-        className="overflow-hidden px-8 py-6 w-[90vw] h-[90vh] m-auto mt-[5vh] bg-gray-900 text-gray-100 rounded-xl"
+        className="overflow-hidden px-8 py-4 w-[90vw] h-[92vh] m-auto mt-[4vh] bg-gray-900 text-gray-100 rounded-xl"
       >
         <div className="overflow-y-auto h-full scrollbar-none">
-          <h1 className="text-4xl font-semibold mb-4">Post Tweet</h1>
-          <h1>Add Description</h1>
+          <h1 className="text-4xl font-semibold mb-3">Post Tweet</h1>
+          <h1 className="text-lg">Add Description</h1>
           <textarea
-            className="bg-gray-800 px-4 py-2 rounded-xl my-2 w-full focus:outline-none text-gray-400 resize-none"
+            className="bg-gray-800 px-4 py-2 rounded-xl mt-2 w-full focus:outline-none text-gray-400 resize-none"
             rows={5}
             value={tweetText}
             onChange={(e) => setTweetText(e.target.value)}
             placeholder="Enter description ..."
+            maxLength={400}
           />
-          <h1>Add media</h1>
+          <h1 className="text-xs font-thin text-end">Max Charaters 400</h1>
+          <h1 className="text-lg">Add media</h1>
           <input
-            className="accent-gray-900 my-2"
+            className="accent-gray-900 mt-2"
             name="media"
             type="file"
             onChange={(e) => setFile(e.target.files[0])}
           />
+          <h1 className="text-xs text-gray-400 font-thin mt-1">Only upload text, image, video and audio</h1>
           <h1 className="text-2xl my-2 font-bold">OR</h1>
-          <h1>Use AI to generate Image for your tweet</h1>
+          <h1 className="text-lg">Use AI to generate Image for your tweet</h1>
           <div className="flex my-2 gap-4">
             <input
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               type="text"
-              placeholder="Enter Tweet"
+              placeholder="Enter a prompt"
               className="bg-gray-800 px-4 py-2 rounded-xl w-full focus:outline-none text-gray-400"
             />
             <button
@@ -483,12 +511,26 @@ const Tweets = () => {
               <img className="h-32 w-32 rounded-xl" src={imgurl} />
             </div>
           ) : (
-            <div className="h-32 w-32 bg-gray-800 rounded-xl"></div>
+            <div className="h-32 w-32 bg-gray-800 rounded-xl flex items-center justify-center">
+              {loadingAI ? (
+                <div className="flex gap-1">
+                  <div className="rounded-full border-t-2 w-6 h-6 border-sky-500 animate-spin"></div>
+                  <h1 className="text-xs text-center text-gray-400">
+                    generating...
+                  </h1>
+                </div>
+              ) : (
+                <h1 className="text-xs text-center text-gray-400">
+                  Image will be generated here
+                </h1>
+              )}
+            </div>
           )}
-          <div className="flex my-2 gap-4">
+          <div className="flex my-2 gap-4 items-center">
             <button
               className="text-white font-semibold bg-sky-500 rounded-xl px-4 py-2 whitespace-nowrap"
               onClick={() => tweetAI()}
+              disabled={loading}
             >
               Tweet AI Generated Photo
             </button>
@@ -497,9 +539,16 @@ const Tweets = () => {
               onClick={() => {
                 tweetKaro();
               }}
+              disabled={loading}
             >
-              Tweet Karo Dost
+              Tweet
             </button>
+            {loading && (
+              <div className="flex gap-1">
+                <div className="rounded-full border-t-2 w-6 h-6 border-sky-500 animate-spin"></div>
+                <h1>loading...</h1>
+              </div>
+            )}
           </div>
         </div>
       </Modal>
