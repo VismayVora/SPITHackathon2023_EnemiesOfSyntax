@@ -32,3 +32,14 @@ News Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803414-afab688d-481c-4076-b850-b882a1042800.png)
 NFTs Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803417-9e8d288b-7fc7-4a16-9deb-0a14a189e711.png)
+
+Mobile App:
+
+![IMG-20230205-WA0001](https://user-images.githubusercontent.com/52329525/216803655-55a98f1e-48cc-4729-b3bf-f6853b225b60.jpg)
+![IMG-20230205-WA0002](https://user-images.githubusercontent.com/52329525/216803670-d71ae742-c08d-4c1f-86e1-aacaaceedca4.jpg)
+![IMG-20230205-WA0003](https://user-images.githubusercontent.com/52329525/216803663-4cab8b9d-f3cb-4203-a78c-5650baeeb98f.jpg)
+![IMG-20230205-WA0004](https://user-images.githubusercontent.com/52329525/216803674-23ad5be4-21ce-4d2c-aea5-625b6c676efc.jpg)
+![IMG-20230205-WA0005](https://user-images.githubusercontent.com/52329525/216803678-98c2e4aa-d0e3-4164-a0f5-1584b224f838.jpg)
+![IMG-20230205-WA0006](https://user-images.githubusercontent.com/52329525/216803680-71793b36-6f38-4cea-8efe-ee8a88f3c23b.jpg)
+![IMG-20230205-WA0007](https://user-images.githubusercontent.com/52329525/216803652-592aa108-00af-4070-9a13-da1f1ed3bd1f.jpg)
+
