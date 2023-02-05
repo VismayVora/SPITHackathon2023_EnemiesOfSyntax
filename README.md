@@ -24,6 +24,8 @@ Admin Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803389-b4b584dd-3435-4d8a-abb3-9d676b00bb61.png)
 Voting Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803399-8276e17e-113d-45d8-a631-174c10f0dd09.png)
+Add Tweet Page:
+![image](https://user-images.githubusercontent.com/52329525/216803605-42e3983d-0191-44d2-876d-af7ef5514da1.png)
 Chat Page:
 ![image](https://user-images.githubusercontent.com/52329525/216803407-d4042e35-774d-442f-966c-7558dd86a222.png)
 News Page:
