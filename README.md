@@ -1,4 +1,4 @@
-# SPITHackathon2023_EnemiesOfSyntax
+# Dwitter - SPITHackathon2023_EnemiesOfSyntax
 Social Media platforms in general have access to a lot of our personal information that is stored on centralized servers that are prone to security threats. Build a decentralized platform that allows users to share their opinions and feelings online while considering the above.
 
 It consists of Ethereum Blockchain, Django Backend Server and React as the frontend.
@@ -6,7 +6,7 @@ It consists of Ethereum Blockchain, Django Backend Server and React as the front
 Hardhat is used for creating a local blockchain and deploying it to the local test network.
 
 Our Solution:
-Decentralized
+Decentralized Tweeting System
 <ul>Bi-layered Content Moderation Policy:</ul>
 <ul>AI and ML models used to detect hateful speech, sensitive images and inappropriate content</ul>
 <ul>Not only in text but images, audio files and videos that are attached to a post.</ul>
